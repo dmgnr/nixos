@@ -18,7 +18,7 @@
     "$terminal" = "kitty nu";
     "$fileManager" = "dolphin";
     "$menud" = "tofi-drun";
-    "$menu" = "$(tofi-run)";
+    "$menu" = "$(tofi-run --require-match=false)";
     "$util" = "bun ${builtins.toString ./util/index.ts}";
 
     monitor = ",preferred,auto,auto";
