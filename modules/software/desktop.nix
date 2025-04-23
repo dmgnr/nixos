@@ -5,10 +5,9 @@
   services.xserver.enable = false;
   programs.xwayland.enable = true;
 
-  # Enable the KDE Plasma Desktop Environment.
+  # Enable the SDDM display manager.
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.theme = "sddm-astronaut-theme";
-  services.desktopManager.plasma6.enable = true;
   services.displayManager.sddm.wayland.compositor = "kwin";
   services.displayManager.sddm.wayland.enable = true;
   services.displayManager.defaultSession = "hyprland";

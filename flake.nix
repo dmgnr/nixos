@@ -23,6 +23,12 @@
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {
@@ -33,6 +39,7 @@
       thorium,
       home-manager,
       winapps,
+      lanzaboote,
       ...
     }:
     {
@@ -91,6 +98,9 @@
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
             }
+
+            # Lanzaboote
+            lanzaboote.nixosModules.lanzaboote
           ];
         }
       );

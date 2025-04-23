@@ -1,3 +1,4 @@
+
 { ... }:
 {
   imports = [
@@ -7,6 +8,7 @@
     ./services.nix
     ./hypridle.nix
     ./hyprlock.nix
+    ./theme.nix
   ];
 
   wayland.windowManager.hyprland.enable = true;
@@ -160,7 +162,7 @@
       ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
       ",XF86MonBrightnessUp, exec, brightnessctl s 10%+;hyprctl notify 1 2000 0 \"Brightness increased\""
-      ",XF86MonBrightnessDown, exec, brightnesssctl s 10%-;hyprctl notify 1 2000 0 \"Brightness reduced\""
+      ",XF86MonBrightnessDown, exec, brightnessctl s 10%-;hyprctl notify 1 2000 0 \"Brightness reduced\""
     ];
     bindl = [
       # Requires playerctl
@@ -180,12 +182,18 @@
       # Keep picture in picture on all workspaces
       "float, title:^(Picture in picture)$"
       "pin, title:^(Picture in picture)$"
+      "noborder, onworkspace:w[tv1] f[-1], floating:0"
     ];
 
     # Waybar blur
     layerrule = [
       "blur, waybar"
       "blur, wofi"
+    ];
+
+    env = [
+      # Set the environment variable to use the correct theme
+      "HYPRCURSOR_THEME=Bibata-Modern-Classic"
     ];
   };
 }

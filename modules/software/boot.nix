@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }:
+{
   boot = {
     plymouth = {
       enable = true;
@@ -29,8 +30,16 @@
     # It's still possible to open the bootloader list by pressing any key
     # It will just not appear on screen unless a key is pressed
     loader = {
-      systemd-boot.enable = true;
+      # systemd-boot.enable = true;
+
+      # Lanzaboote override systemd-boot
+      systemd-boot.enable = lib.mkForce false;
+
       timeout = 0;
+    };
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
     };
     kernel.sysctl = {
       "vm.swappiness" = 20;
@@ -39,4 +48,8 @@
 
     supportedFilesystems = [ "ntfs" ];
   };
+
+  environment.systemPackages = with pkgs; [
+    sbctl
+  ];
 }
