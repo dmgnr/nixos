@@ -13,7 +13,9 @@
 
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.systemd.extraCommands = [
-    "hyprlock & waybar & kitty nu & gnome-keyring-daemon & systemctl --user start hyprpolkitagent hypridle hyprpaper dunst gnome-keyring"
+    "hyprctl setcursor Bibata-Modern-Classic 24"
+    "systemctl --user start hyprpolkitagent hypridle hyprpaper dunst gnome-keyring"
+    "hyprlock & waybar & kitty"
   ];
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
