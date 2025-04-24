@@ -2,7 +2,7 @@
 {
   programs.waybar.enable = true;
   programs.waybar.settings = [
-    {
+    rec {
       layer = "top"; # Waybar at top layer
       "position" = "bottom"; # Waybar at the bottom of your screen
       "reload_style_on_change" = true;
@@ -27,9 +27,10 @@
       "hyprland/window" = {
         format = "{}";
         icon = true;
+        icon-size = height;
         rewrite = {
-          "(.*) - Thorium" = "🌎 $1";
-          "(.*) (?:- .* )?- Visual Studio Code" = "VSC $1";
+          "(.*) - Thorium" = "$1";
+          "(.*) (?:- .* )?- Visual Studio Code" = "$1";
         };
       };
       "hyprland/workspaces" = {
