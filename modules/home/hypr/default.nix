@@ -1,4 +1,3 @@
-
 { ... }:
 {
   imports = [
@@ -97,7 +96,8 @@
 
     # Input settings
     input = {
-      kb_layout = "us";
+      kb_layout = "us,th";
+      kb_variant = ",qwerty";
       follow_mouse = 1;
       sensitivity = 0;
       touchpad = {

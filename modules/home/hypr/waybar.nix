@@ -24,6 +24,14 @@
         "tray"
         "clock"
       ];
+      "hyprland/window" = {
+        format = "{}";
+        icon = true;
+        rewrite = {
+          "(.*) - Thorium" = "🌎 $1";
+          "(.*) (?:- .* )?- Visual Studio Code" = "VSC $1";
+        };
+      };
       "hyprland/workspaces" = {
         format = "{icon}";
         format-icons = {
