@@ -17,7 +17,6 @@
     where-is-my-sddm-theme
     (sddm-astronaut.override { embeddedTheme = "blackhole"; })
     kdePackages.qtmultimedia
-    kitty
     playerctl
     wl-clipboard
     system76-power
