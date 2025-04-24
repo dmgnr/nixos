@@ -19,7 +19,6 @@
       nixfmt-rfc-style
       element-desktop
       blackbox-terminal
-      micro
       gh
       spotube
       inshellisense

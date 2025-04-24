@@ -7,5 +7,6 @@
     ./tf.nix
     ./kitty.nix
     ./yazi.nix
+    ./micro.nix
   ];
 }
