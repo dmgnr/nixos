@@ -68,7 +68,7 @@
           warning = 30;
           critical = 15;
         };
-        format = "";
+        format = "{capacity}% {icon}";
         format-full = "{icon}";
         format-good = "{capacity}% {icon}"; # An empty format will hide the module
         format-icons = [
