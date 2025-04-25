@@ -103,7 +103,7 @@ async function run() {
   } else {
     res.text = net.format;
     res.tooltip = `${net.tooltip}`;
-    res.class = net.class;
+    // No class to make it transparent
   }
   console.log(JSON.stringify(res));
 }

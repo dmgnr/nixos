@@ -55,6 +55,7 @@ window#waybar {
 #pulseaudio,
 #mpris,
 #tray,
+#custom-info,
 #mode {
   padding: 0 5px; /*3px*/
   margin: 0 0; /*2px*/
