@@ -9,7 +9,7 @@ async function getBatPercent() {
   const percent = Math.round((now / full) * 100);
   const low = percent < 40 && status.includes("Discharging");
   const icon = low ? icons[Math.floor(percent / 20)] : "󰁺";
-  return { text: `${percent}% ${icon}`, low };
+  return { text: `${percent}% ${icon}`, low, percent };
 }
 async function getVolume() {
   const out = await $`wpctl get-volume @DEFAULT_AUDIO_SINK@`.text();
@@ -85,7 +85,9 @@ async function run() {
   if (bat.low) {
     res.text = bat.text;
     res.tooltip = "Battery low";
-    res.class = "bat";
+    res.class =
+      "bat " +
+      (bat.percent < 15 ? "critical" : bat.percent < 35 ? "warning" : "");
   } else if (mem.perc > 0.85) {
     res.text = mem.text;
     res.class = "mem";
