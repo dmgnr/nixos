@@ -173,7 +173,7 @@
       ", XF86AudioPlay, exec, playerctl play-pause"
       ", XF86AudioPrev, exec, playerctl previous"
       # Screenshot
-      ", print, exec, hyprshot -m region --clipboard-only"
+      ", print, exec, hyprshot -m region --clipboard-only -z"
       "SHIFT, print, exec, hyprshot -m output -m active --clipboard-only"
     ];
     windowrulev2 = [
