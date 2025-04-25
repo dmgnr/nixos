@@ -52,8 +52,8 @@ function getMemPercent() {
 }
 async function getNetwork() {
   const out = await $`nmcli -g name,device c | grep "wlp2s0"`.text();
-  if (!out) return { format: " ", class: "disconnected" };
-  return { format: " ", tooltip: out, class: "connected" };
+  if (!out) return { format: " ", class: "net" };
+  return { format: " ", tooltip: out, class: "net" };
 }
 
 async function run() {
