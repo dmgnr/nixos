@@ -16,11 +16,7 @@
       modules-center = [ ];
       modules-right = [
         "mpris"
-        "pulseaudio"
-        "network"
-        "cpu"
-        "memory"
-        "battery"
+        "group/group-info"
         "tray"
         "clock"
       ];
@@ -30,15 +26,16 @@
         icon-size = height;
         rewrite = {
           "(.*) - Thorium" = "$1";
-          "(.*) (?:- .* )?- Visual Studio Code" = "$1";
+          "(.*?) (?:- .* )?- Visual Studio Code" = "$1";
+          "• Discord \| (.*)" = "$1";
         };
       };
       "hyprland/workspaces" = {
         format = "{icon}";
         format-icons = {
-          active = "";
-          default = "";
-          "empty" = "";
+          active = "|";
+          default = "|";
+          empty = "|";
         };
         persistent-workspaces = {
           "*" = [
@@ -66,13 +63,14 @@
       battery = {
         bat = "BAT0";
         states = {
-          # good = 95;
+          full = 100;
+          good = 95;
           warning = 30;
           critical = 15;
         };
-        format = "{capacity}% {icon}";
-        format-good = ""; # An empty format will hide the module
-        format-full = "";
+        format = "";
+        format-full = "{icon}";
+        format-good = "{capacity}% {icon}"; # An empty format will hide the module
         format-icons = [
           "󰁻"
           "󰁼"
@@ -129,6 +127,20 @@
         status-icons = {
           paused = "";
         };
+      };
+      "group/group-info" = {
+        drawer = {
+          transition-duration = 500;
+          transition-left-to-right = false;
+        };
+        modules = [
+          "battery"
+          "pulseaudio"
+          "network"
+          "cpu"
+          "memory"
+        ];
+        orientation = "inherit";
       };
     }
   ];

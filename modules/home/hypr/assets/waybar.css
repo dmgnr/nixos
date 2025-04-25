@@ -18,8 +18,12 @@ window#waybar {
   margin: 2px 0;
 }
 
+#workspaces {
+  padding: 0 0 3px 3px;
+}
+
 #workspaces button {
-  padding: 0 5px;
+  padding: 0 0;
   min-width: 0;
   background: transparent;
   color: white;
@@ -68,9 +72,6 @@ window#waybar {
   color: red;
 }
 
-#battery.charging {
-}
-
 @keyframes blink {
   to {
     background-color: #ffffff;
@@ -78,10 +79,25 @@ window#waybar {
   }
 }
 
+#battery.full {
+  background: transparent;
+  color: lime;
+}
+
 #battery.warning:not(.charging) {
   color: white;
   animation-name: blink;
   animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#battery.critical:not(.charging) {
+  background-color: #f53c3c;
+  color: white;
+  animation-name: blink;
+  animation-duration: 0.2s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
