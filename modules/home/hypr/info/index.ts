@@ -95,7 +95,7 @@ async function run() {
       (bat.discharging
         ? bat.percent < 15
           ? "critical"
-          : bat.percent < 35
+          : bat.percent < 25
           ? "warning"
           : ""
         : "");
