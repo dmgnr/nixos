@@ -61,6 +61,7 @@ async function getNetwork() {
   return { format: " ", tooltip: out, class: "net" };
 }
 
+var lastVolume: number | null = null;
 async function run() {
   /*console.log(
     "\u001bcMem: " +
@@ -80,6 +81,7 @@ async function run() {
   const net = await getNetwork();
   const cpu = getCpuPercent();
   const vol = await getVolume();
+  if (lastVolume === null) lastVolume = vol.volume;
   var res = {
     text: "",
     alt: "",
@@ -87,7 +89,12 @@ async function run() {
     class: "",
     percentage: 0,
   };
-  if (bat.low) {
+  if (vol.volume != lastVolume) {
+    res.text = vol.text;
+    res.tooltip = "Volume: " + vol.volume + "%";
+    res.class = "vol";
+    lastVolume = vol.volume;
+  } else if (bat.low) {
     res.text = bat.text;
     res.tooltip = "Battery low";
     res.class =
@@ -111,7 +118,7 @@ async function run() {
     res.class = "cpu";
   } else if (vol.muted || vol.volume > 70) {
     res.text = vol.text;
-    res.tooltip = "Volume muted";
+    res.tooltip = "Volume: " + vol.volume + "%";
     res.class = "vol";
   } else {
     res.text = "";
