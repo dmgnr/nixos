@@ -122,7 +122,7 @@
         "$mod, Q, exec, $terminal"
         "$mod, L, exec, hyprlock"
         "ALT, F4, killactive,"
-        "$mod, M, exit,"
+        "ALT SHIFT, F4, forcekillactive,"
         "$mod, E, exec, $fileManager"
         "$mod, V, togglefloating,"
         "$mod, R, exec, $menud"
@@ -134,6 +134,8 @@
         "$mod, right, movefocus, r"
         "$mod, up, movefocus, u"
         "$mod, down, movefocus, d"
+        "$mod, G, togglegroup," # Toggle group on active window
+        "$mod, TAB, changegroupactive," # Move into group
         # ...additional keybindings from hyprland.conf...
       ]
       ++ (
