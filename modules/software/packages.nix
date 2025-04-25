@@ -21,6 +21,8 @@
     wl-clipboard
     system76-power
     bibata-cursors
+    adwaita-qt
+    adwaita-qt6
   ];
 
   fonts.packages = with pkgs; [

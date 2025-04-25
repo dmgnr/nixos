@@ -1,14 +1,17 @@
 { pkgs, ... }:
 {
-  gtk.cursorTheme = {
-    name = "Bibata-Modern-Classic";
-    package = pkgs.bibata-cursors;
-    size = 24;
-  };
+  gtk = {
+    enable = true;
+    cursorTheme = {
+      name = "Bibata-Modern-Classic";
+      package = pkgs.bibata-cursors;
+      size = 24;
+    };
 
-  qt.style.name = "adwaita-dark";
-  gtk.theme = {
-    name = "Adwaita-dark";
-    package = pkgs.gnome.gnome-themes-extra;
+    theme = {
+      name = "Fluent";
+      package = (pkgs.fluent-gtk-theme.override { colorVariants = [ "dark" ]; });
+    };
   };
+  qt.style.name = "adwaita-dark";
 }
