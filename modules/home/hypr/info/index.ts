@@ -91,13 +91,14 @@ async function run() {
     res.text = bat.text;
     res.tooltip = "Battery low";
     res.class =
-      "bat" + bat.discharging
+      "bat" +
+      (bat.discharging
         ? bat.percent < 15
           ? "critical"
           : bat.percent < 35
           ? "warning"
           : ""
-        : "";
+        : "");
   } else if (mem.perc > 0.85) {
     res.text = mem.text;
     res.class = "mem";

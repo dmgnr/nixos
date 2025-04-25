@@ -85,7 +85,7 @@ window#waybar {
   color: lime;
 }
 
-#custom-info.bat {
+#custom-info.bat, #custom-info.batwarning {
   background-color: #f53c3c;
 }
 
