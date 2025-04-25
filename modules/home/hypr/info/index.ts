@@ -22,7 +22,7 @@ async function getVolume() {
     out.match(/^Volume: ([0-9]+(?:\.[0-9]+))?( \[MUTED\])?$/m) ?? [];
   const volume = parseFloat(vol ?? "0");
   return {
-    text: muted ? "" : `${volume}%  `,
+    text: muted ? "" : `${volume}% ${volume < 0.5 ? "" : " "}`,
     volume,
     muted: !!muted,
   };
@@ -114,8 +114,7 @@ async function run() {
     res.tooltip = "Volume muted";
     res.class = "vol";
   } else {
-    res.text = net.format;
-    res.tooltip = `${net.tooltip}`;
+    res.text = "";
     // No class to make it transparent
   }
   console.log(JSON.stringify(res));
