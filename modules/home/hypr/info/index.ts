@@ -41,7 +41,7 @@ function getCpuPercent() {
     const rawIdle = cpu.times.idle;
     const idle = rawIdle - (previousIdle[i] ?? 0);
     previousIdle[i] = rawIdle;
-    const percent = Math.round(((total - idle) / total) * 100);
+    const percent = ((total - idle) / total) * 100;
     acc.push(percent);
     return acc;
   }, [] as number[]);
@@ -106,7 +106,7 @@ async function run() {
     res.text = net.format;
     res.tooltip = "Disconnected";
     res.class = "net";
-  } else if (cpu.perc > 0.7) {
+  } else if (cpu.perc > 70) {
     res.text = cpu.text;
     res.class = "cpu";
   } else if (vol.muted || vol.volume > 0.7) {
