@@ -84,6 +84,10 @@ window#waybar {
   color: lime;
 }
 
+#custom-info.bat {
+  background-color: #f53c3c;
+}
+
 #battery.warning:not(.charging) {
   color: white;
   animation-name: blink;
@@ -103,15 +107,15 @@ window#waybar {
   animation-direction: alternate;
 }
 
-#cpu {
+#cpu & #custom-info.cpu {
   background-color: #5f3606;
 }
 
-#memory {
+#memory & #custom-info.mem {
   background-color: #065711;
 }
 
-#network {
+#network #custom-info.net {
   background-color: #063657;
 }
 
@@ -119,7 +123,7 @@ window#waybar {
   background: #f53c3c;
 }
 
-#pulseaudio {
+#pulseaudio & #custom-info.vol {
   background-color: #4f0552;
 }
 

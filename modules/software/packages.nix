@@ -25,6 +25,7 @@
 
   fonts.packages = with pkgs; [
     nerd-fonts.ubuntu
+    nerd-fonts.caskaydia-cove
   ];
 
   services.flatpak.enable = true;

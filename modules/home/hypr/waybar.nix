@@ -116,6 +116,11 @@
         hide-empty-text = true;
         on-click = "playerctl play-pause";
       };
+      "custom/info" = {
+        exec = "bun ${builtins.toString ./info/index.ts}";
+        restart-interval = 5;
+        return-type = "json";
+      };
       mpris = {
         format = "{dynamic} {player_icon}";
         format-paused = "<i>{dynamic}</i> {status_icon}";
@@ -134,11 +139,12 @@
           transition-left-to-right = false;
         };
         modules = [
-          "battery"
+          "custom/info"
           "pulseaudio"
           "network"
           "cpu"
           "memory"
+          "battery"
         ];
         orientation = "inherit";
       };
