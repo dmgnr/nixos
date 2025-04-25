@@ -20,9 +20,9 @@ async function getVolume() {
   const out = await $`wpctl get-volume @DEFAULT_AUDIO_SINK@`.text();
   const [, vol, muted] =
     out.match(/^Volume: ([0-9]+(?:\.[0-9]+))?( \[MUTED\])?$/m) ?? [];
-  const volume = parseFloat(vol ?? "0");
+  const volume = parseFloat(vol ?? "0") * 100;
   return {
-    text: muted ? "" : `${volume}% ${volume < 0.5 ? "" : " "}`,
+    text: muted ? "" : `${volume}% ${volume < 5 ? "" : " "}`,
     volume,
     muted: !!muted,
   };
@@ -109,7 +109,7 @@ async function run() {
   } else if (cpu.perc > 70) {
     res.text = cpu.text;
     res.class = "cpu";
-  } else if (vol.muted || vol.volume > 0.7) {
+  } else if (vol.muted || vol.volume > 70) {
     res.text = vol.text;
     res.tooltip = "Volume muted";
     res.class = "vol";
