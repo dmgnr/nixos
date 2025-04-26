@@ -175,8 +175,8 @@
       ", XF86AudioPlay, exec, playerctl play-pause"
       ", XF86AudioPrev, exec, playerctl previous"
       # Screenshot
-      ", print, exec, hyprshot -m region --clipboard-only -z"
-      "SHIFT, print, exec, hyprshot -m output -m active --clipboard-only"
+      ", print, exec, hyprshot -m region --clipboard-only -z -s"
+      "SHIFT, print, exec, hyprshot -m output -m active --clipboard-only -s"
     ];
     windowrulev2 = [
       # Ignore maximize requests from apps. You'll probably like this.
