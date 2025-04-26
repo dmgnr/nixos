@@ -120,6 +120,7 @@
         exec = "bun ${builtins.toString ./info/index.ts}";
         restart-interval = 5;
         return-type = "json";
+        on-click = "swaync-client -t";
       };
       mpris = {
         format = "{dynamic} {player_icon}";

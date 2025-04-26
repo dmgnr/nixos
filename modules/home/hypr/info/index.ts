@@ -65,11 +65,15 @@ async function getNetwork() {
     network: out.replace(/:wlp2s0/, ""),
   };
 }
+function getNotification() {
+  return $`swaync-client -c`.json();
+}
 
 var lastVolume: number | null = null;
 var lastNetwork: string | null = null;
 var volumeTimer = 0,
-  networkTimer = 0;
+  networkTimer = 0,
+  last = "";
 async function run() {
   /*console.log(
     "\u001bcMem: " +
@@ -89,6 +93,7 @@ async function run() {
   const net = await getNetwork();
   const cpu = getCpuPercent();
   const vol = await getVolume();
+  const ntf = await getNotification();
   if (lastVolume === null) lastVolume = vol.volume;
   if (vol.volume != lastVolume) volumeTimer = Date.now() + 3000;
   if (net.network && lastNetwork === null) lastNetwork = net.network;
@@ -136,10 +141,13 @@ async function run() {
     res.tooltip = "Volume: " + vol.volume + "%";
     res.class = "vol";
   } else {
-    res.text = "";
+    res.text = (ntf ? ntf + " " : "") + "";
     // No class to make it transparent
   }
-  console.log(JSON.stringify(res));
+  const out = JSON.stringify(res);
+  if (out == last) return;
+  last = out;
+  console.log(out);
 }
 setInterval(run, 1000);
 run();
