@@ -58,10 +58,18 @@ function getMemPercent() {
 async function getNetwork() {
   const out = await $`nmcli -g name,device c | grep "wlp2s0"`.text();
   if (!out) return { format: " ", class: "net" };
-  return { format: " ", tooltip: out, class: "net" };
+  return {
+    format: " ",
+    tooltip: out,
+    class: "net",
+    network: out.replace(/:wlp2s0/, ""),
+  };
 }
 
 var lastVolume: number | null = null;
+var lastNetwork: string | null = null;
+var volumeTimer = 0,
+  networkTimer = 0;
 async function run() {
   /*console.log(
     "\u001bcMem: " +
@@ -82,6 +90,9 @@ async function run() {
   const cpu = getCpuPercent();
   const vol = await getVolume();
   if (lastVolume === null) lastVolume = vol.volume;
+  if (vol.volume != lastVolume) volumeTimer = Date.now() + 3000;
+  if (net.network && lastNetwork === null) lastNetwork = net.network;
+  if (net.network != lastNetwork) networkTimer = Date.now() + 3000;
   var res = {
     text: "",
     alt: "",
@@ -89,11 +100,15 @@ async function run() {
     class: "",
     percentage: 0,
   };
-  if (vol.volume != lastVolume) {
+  if (Date.now() < volumeTimer) {
     res.text = vol.text;
     res.tooltip = "Volume: " + vol.volume + "%";
     res.class = "vol";
     lastVolume = vol.volume;
+  } else if (net.network && Date.now() < networkTimer) {
+    res.text = net.network + " " + net.format;
+    res.class = net.class;
+    lastNetwork = net.network;
   } else if (bat.low) {
     res.text = bat.text;
     res.tooltip = "Battery low";
