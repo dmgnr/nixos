@@ -22,7 +22,7 @@
     "$fileManager" = "dolphin";
     "$menud" = "tofi-drun";
     "$menu" = "$(tofi-run --require-match=false)";
-    "$util" = "bun ${builtins.toString ./util/index.ts}";
+    "$util" = "bun ${./util/index.ts}";
 
     monitor = ",preferred,auto,auto";
 

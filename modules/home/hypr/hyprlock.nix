@@ -21,7 +21,7 @@
       color = "rgba(181818FF)";
       # path = {{ SWWW_WALL }}
 
-      path = builtins.toString ./assets/bg-blank.jpg;
+      path = "${./assets/bg-blank.jpg}";
       # blur_size = 15
       # blur_passes = 4
     };

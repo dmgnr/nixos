@@ -6,7 +6,7 @@
     wantedBy = [ "multi-user.target" ];
 
     serviceConfig = {
-      ExecStart = "${pkgs.godns.outPath}/bin/godns -c=${builtins.toString ./config.json}";
+      ExecStart = "${pkgs.godns.outPath}/bin/godns -c=${./config.json}";
       Restart = "always";
       KillMode = "process";
       RestartSec = "2s";

@@ -34,3 +34,7 @@ let __is_custom_PROMPT_INDICATOR = {
     $"($ind)\e]6973;PE\a"
 }
 $env.PROMPT_INDICATOR = $__is_custom_PROMPT_INDICATOR
+
+is
+clear
+if (($env.ISTERM? | default "0") != "1") { exit }

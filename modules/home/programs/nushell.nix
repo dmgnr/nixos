@@ -6,12 +6,7 @@
       show_banner = false;
       completions.algorithm = "fuzzy";
     };
-    extraConfig = ''
-      source ${builtins.toString ./assets/init.nu}
-      is
-      clear
-      if (($env.ISTERM? | default "0") != "1") { exit }
-    '';
+    configFile.source = ./assets/init.nu;
     extraEnv = ''
       $env.PROMPT_COMMAND_RIGHT = ""
       $env.PROMPT_INDICATOR = " "

@@ -117,7 +117,7 @@
         on-click = "playerctl play-pause";
       };
       "custom/info" = {
-        exec = "bun ${builtins.toString ./info/index.ts}";
+        exec = "bun ${./info/index.ts}";
         restart-interval = 5;
         return-type = "json";
         on-click = "swaync-client -t";
