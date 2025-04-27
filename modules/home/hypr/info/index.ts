@@ -86,14 +86,13 @@ async function run() {
 
   if (now > notificationTimer) {
     notificationCache = await getNotification();
-    notificationTimer = now + 10000; // อัพเดท notification ทุก 10 วิ
+    notificationTimer = now + 10000;
   }
 
   let bat: any = null;
   let volume: any = null;
   let network: any = null;
 
-  // ตัดสินใจก่อนว่าต้องโหลดอะไร
   if (volumeTimer > now || lastVolume === null) {
     volume = await getVolume();
   }
