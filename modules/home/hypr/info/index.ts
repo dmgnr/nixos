@@ -56,13 +56,13 @@ function getMemPercent() {
   return { text: `${100 - Math.round(mem * 100)}%  `, perc: mem };
 }
 async function getNetwork() {
-  const out = await $`nmcli -g name,device c | grep "wlp2s0"`.text();
+  const out = await $`nmcli -g general.connection d show wlp2s0`.text();
   if (!out) return { format: " ", class: "net" };
   return {
     format: " ",
     tooltip: out,
     class: "net",
-    network: out.replace(/:wlp2s0/, ""),
+    network: out,
   };
 }
 function getNotification() {
@@ -75,19 +75,6 @@ var volumeTimer = 0,
   networkTimer = 0,
   last = "";
 async function run() {
-  /*console.log(
-    "\u001bcMem: " +
-      getMemPercent() +
-      "\nCPU: " +
-      getCpuPercent() +
-      "\nBat: " +
-      (await getBatPercent()) +
-      "%\nVolume: " +
-      inspect(await getVolume()) +
-      "\nNetwork: " +
-      inspect(await getNetwork()) +
-      "\n"
-  );*/
   const bat = await getBatPercent();
   const mem = getMemPercent();
   const net = await getNetwork();
