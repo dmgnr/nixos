@@ -11,6 +11,16 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
+    prime = {
+      reverseSync.enable = true;
+      # Enable if using an external GPU
+      allowExternalGpu = false;
+
+      # Make sure to use the correct Bus ID values for your system!
+      intelBusId = "PCI:1:0:0";
+      nvidiaBusId = "PCI:0:2:0";
+      # amdgpuBusId = "PCI:54:0:0"; For AMD GPU
+    };
 
     # Modesetting is required.
     modesetting.enable = true;

@@ -197,7 +197,8 @@
 
     env = [
       # Set the environment variable to use the correct theme
-      "HYPRCURSOR_THEME=Bibata-Modern-Classic"
+      "HYPRCURSOR_THEME,Bibata-Modern-Classic"
+      "__NV_PRIME_RENDER_OFFLOAD,1"
     ];
   };
 }
