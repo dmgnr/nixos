@@ -1,6 +1,5 @@
 import { file, $ } from "bun";
-import { cpus, freemem, totalmem } from "os";
-
+import { cpus, totalmem } from "os";
 async function getBatPercent() {
   const [nowStr, fullStr, status] = await Promise.all([
     file("/sys/class/power_supply/BAT0/energy_now").text(),
@@ -50,8 +49,13 @@ function getCpuPercent() {
   return { text: `${Math.round(perc)}% `, perc };
 }
 
-function getMemPercent() {
-  const used = 1 - freemem() / totalmem();
+async function getMemPercent() {
+  const available =
+    1024 *
+    Number(
+      (await file("/proc/meminfo").text()).match(/MemAvailable:[ ]+(\d+)/)
+    );
+  const used = 1 - available / totalmem();
   return { text: `${Math.round(used * 100)}% `, perc: used };
 }
 
@@ -82,7 +86,7 @@ let lastOutput = "";
 async function run() {
   const now = Date.now();
   const cpu = getCpuPercent();
-  const mem = getMemPercent();
+  const mem = await getMemPercent();
 
   if (now > notificationTimer) {
     notificationCache = await getNotification();
@@ -126,9 +130,11 @@ async function run() {
     res.text = volume.text;
     res.tooltip = `Volume: ${Math.round(volume.volume)}%`;
     res.class = "vol";
+    res.alt = "vol";
   } else if (networkTimer > now && network) {
     res.text = `${network.network} ${network.format}`;
     res.class = network.class;
+    res.alt = "net";
   } else if (bat?.low) {
     res.text = bat.text;
     res.tooltip = "Battery low";
@@ -141,22 +147,28 @@ async function run() {
           ? "warning"
           : ""
         : "");
+    res.alt = "bat";
   } else if (mem.perc > 0.85) {
     res.text = mem.text;
     res.class = "mem";
+    res.alt = "mem";
   } else if (!network?.network) {
     res.text = network?.format ?? "";
     res.tooltip = "Disconnected";
     res.class = "net";
+    res.alt = "net";
   } else if (cpu.perc > 70) {
     res.text = cpu.text;
     res.class = "cpu";
+    res.alt = "cpu";
   } else if (volume?.muted || volume?.volume > 70) {
     res.text = volume.text;
     res.tooltip = `Volume: ${Math.round(volume.volume)}%`;
     res.class = "vol";
+    res.alt = "vol";
   } else {
     res.text = (notificationCache ? `${notificationCache} ` : "") + "";
+    res.alt = "ntf";
   }
 
   const output = JSON.stringify(res);
