@@ -23,7 +23,7 @@ async function getBatPercent() {
 async function getVolume() {
   const out = await $`wpctl get-volume @DEFAULT_AUDIO_SINK@`.text();
   const [, vol, muted] =
-    out.match(/^Volume: ([0-9]+(?:\\.[0-9]+))?( \\[MUTED\\])?$/m) ?? [];
+    out.match(/^Volume: ([0-9]+(?:\.[0-9]+))?( \[MUTED\])?$/m) ?? [];
   const volume = parseFloat(vol ?? "0") * 100;
   return {
     text: muted ? "" : `${Math.round(volume)}% ${volume < 5 ? "" : " "}`,
@@ -74,69 +74,40 @@ async function getNotification() {
   }
 }
 
-// last cache
-let lastVolume: number | null = null;
-let lastNetwork: string | null = null;
-let volumeTimer = 0;
-let networkTimer = 0;
-let notificationCache: any = null;
-let notificationTimer = 0;
-let lastOutput = "";
-
+var lastVolume: number | null = null;
+var lastNetwork: string | null = null;
+var volumeTimer = 0,
+  networkTimer = 0,
+  last = "";
 async function run() {
   try {
-    const now = Date.now();
-    const cpu = getCpuPercent();
+    const bat = await getBatPercent();
     const mem = await getMemPercent();
-
-    if (now > notificationTimer) {
-      notificationCache = await getNotification();
-      notificationTimer = now + 10000;
-    }
-
-    let bat: any = null;
-    let volume: any = null;
-    let network: any = null;
-
-    if (volumeTimer > now || lastVolume === null) {
-      volume = await getVolume();
-    }
-    if (networkTimer > now || lastNetwork === null) {
-      network = await getNetwork();
-    }
-    if (!volume && lastVolume !== null) {
-      volume = { volume: lastVolume, text: "", muted: false };
-    }
-    if (!network && lastNetwork !== null) {
-      network = { network: lastNetwork, format: "", class: "net" };
-    }
-
-    if (!bat && cpu.perc < 70 && mem.perc < 0.85) {
-      bat = await getBatPercent();
-    }
-
-    if (volume && volume.volume !== lastVolume) {
-      volumeTimer = now + 3000;
-      lastVolume = volume.volume;
-    }
-
-    if (network && network.network !== lastNetwork) {
-      networkTimer = now + 3000;
-      lastNetwork = network.network;
-    }
-
-    let res = { text: "", alt: "", tooltip: "", class: "", percentage: 0 };
-
-    if (volumeTimer > now && volume) {
-      res.text = volume.text;
-      res.tooltip = `Volume: ${Math.round(volume.volume)}%`;
+    const net = await getNetwork();
+    const cpu = getCpuPercent();
+    const vol = await getVolume();
+    const ntf = await getNotification();
+    if (lastVolume === null) lastVolume = vol.volume;
+    if (vol.volume != lastVolume) volumeTimer = Date.now() + 3000;
+    if (net.network && lastNetwork === null) lastNetwork = net.network;
+    if (net.network != lastNetwork) networkTimer = Date.now() + 3000;
+    var res = {
+      text: "",
+      alt: "",
+      tooltip: "",
+      class: "",
+      percentage: 0,
+    };
+    if (Date.now() < volumeTimer) {
+      res.text = vol.text;
+      res.tooltip = "Volume: " + vol.volume + "%";
       res.class = "vol";
-      res.alt = "vol";
-    } else if (networkTimer > now && network) {
-      res.text = `${network.network} ${network.format}`;
-      res.class = network.class;
-      res.alt = "net";
-    } else if (bat?.low) {
+      lastVolume = vol.volume;
+    } else if (net.network && Date.now() < networkTimer) {
+      res.text = net.network + " " + net.format;
+      res.class = net.class;
+      lastNetwork = net.network;
+    } else if (bat.low) {
       res.text = bat.text;
       res.tooltip = "Battery low";
       res.class =
@@ -148,35 +119,28 @@ async function run() {
             ? "warning"
             : ""
           : "");
-      res.alt = "bat";
     } else if (mem.perc > 0.85) {
       res.text = mem.text;
       res.class = "mem";
-      res.alt = "mem";
-    } else if (!network?.network) {
-      res.text = network?.format ?? "";
+    } else if (net.class == "disconnected") {
+      res.text = net.format;
       res.tooltip = "Disconnected";
       res.class = "net";
-      res.alt = "net";
     } else if (cpu.perc > 70) {
       res.text = cpu.text;
       res.class = "cpu";
-      res.alt = "cpu";
-    } else if (volume?.muted || volume?.volume > 70) {
-      res.text = volume.text;
-      res.tooltip = `Volume: ${Math.round(volume.volume)}%`;
+    } else if (vol.muted || vol.volume > 70) {
+      res.text = vol.text;
+      res.tooltip = "Volume: " + vol.volume + "%";
       res.class = "vol";
-      res.alt = "vol";
     } else {
-      res.text = (notificationCache ? `${notificationCache} ` : "") + "";
-      res.alt = "ntf";
+      res.text = (ntf ? ntf + " " : "") + "";
+      // No class to make it transparent
     }
-
-    const output = JSON.stringify(res);
-    if (output !== lastOutput) {
-      lastOutput = output;
-      console.log(output);
-    }
+    const out = JSON.stringify(res);
+    if (out == last) return;
+    last = out;
+    console.log(out);
   } catch (e) {
     console.log(
       JSON.stringify({
