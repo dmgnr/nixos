@@ -45,4 +45,11 @@
   };
 
   programs.mtr.enable = true;
+
+  xdg.mime = {
+    enable = true;
+    defaultApplications = {
+      "text/uri-list" = "thorium-browser.desktop";
+    };
+  };
 }

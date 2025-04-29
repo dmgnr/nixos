@@ -8,5 +8,6 @@
     ./kitty.nix
     ./yazi.nix
     ./micro.nix
+    ./nix.nix
   ];
 }

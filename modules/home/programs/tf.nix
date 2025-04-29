@@ -1,6 +1,4 @@
 { ... }:
 {
-  programs.thefuck.enable = true;
-  programs.thefuck.enableNushellIntegration = true;
-  programs.thefuck.enableBashIntegration = true;
+  programs.pay-respects.enable = true;
 }
