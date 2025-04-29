@@ -23,7 +23,6 @@
     bibata-cursors
     adwaita-qt
     adwaita-qt6
-    nvtopPackages.full
   ];
 
   fonts.packages = with pkgs; [

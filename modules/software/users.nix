@@ -24,6 +24,8 @@
       inshellisense
       gearlever
       appimage-run
+      nvtopPackages.full
+      scrcpy
 
       godns
       #  thunderbird
@@ -31,7 +33,10 @@
   };
 
   security.sudo.wheelNeedsPassword = false;
-  security.pam.services.hyprlock = {};
+  security.pam.services.hyprlock = { };
 
-  nix.settings.trusted-users = [ "root" "dgnr" ];
+  nix.settings.trusted-users = [
+    "root"
+    "dgnr"
+  ];
 }
