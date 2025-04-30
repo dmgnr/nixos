@@ -151,6 +151,7 @@
       };
     }
   ];
+  programs.waybar.systemd.enable = true;
   programs.waybar.style = builtins.readFile ./assets/waybar.css;
   home.file."${config.xdg.configHome}/waybar/mediaplayer.sh" = {
     executable = true;

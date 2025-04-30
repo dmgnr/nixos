@@ -13,8 +13,8 @@
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.systemd.extraCommands = [
     "hyprctl setcursor Bibata-Modern-Classic 24"
-    "systemctl --user start hyprpolkitagent hypridle hyprpaper swaync gnome-keyring"
-    "hyprlock & waybar & kitty & kdeconnectd & kdeconnect-indicator"
+    "systemctl --user start hyprpolkitagent hypridle hyprpaper swaync gnome-keyring waybar"
+    "hyprlock & kitty & kdeconnectd & kdeconnect-indicator"
   ];
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
