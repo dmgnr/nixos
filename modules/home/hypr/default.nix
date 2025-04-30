@@ -23,6 +23,7 @@
     "$menud" = "tofi-drun";
     "$menu" = "$(tofi-run --require-match=false)";
     "$util" = "bun ${./util/index.ts}";
+    "$browser" = "thorium-avx";
 
     monitor = ",preferred,auto,auto";
 
@@ -128,6 +129,7 @@
         "$mod, R, exec, $menud"
         "$mod SHIFT, R, exec, $menu"
         "$mod, F, exec, $util"
+        "$mod, T, exec, $browser"
         "$mod, P, pseudo,"
         "$mod, J, togglesplit,"
         "$mod, left, movefocus, l"
