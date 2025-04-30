@@ -13,5 +13,17 @@
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
+    wireplumber.extraConfig."99-stop-microphone-auto-adjust" = {
+      "access.rules" = [
+        {
+          matches = [ { application.process.binary = "vesktop"; } ];
+          actions = {
+            update-props = {
+              default_permissions = "rx";
+            };
+          };
+        }
+      ];
+    };
   };
 }
