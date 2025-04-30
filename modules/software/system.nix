@@ -7,7 +7,13 @@
     daemonCPUSchedPolicy = "idle";
     daemonIOSchedClass = "idle";
     optimise.automatic = true;
-    settings.auto-optimise-store = true;
+    settings = {
+      auto-optimise-store = true;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
   };
 
   # Enable auto-upgrades.
