@@ -12,18 +12,24 @@
 
     listener = [
       {
-        timeout = 180; # 3mins
+        timeout = 300; # 5mins
+        on-timeout = "brightnessctl -s s 10%";
+        on-resumt = "brightnessctl -r";
+      }
+
+      {
+        timeout = 360; # 6mins
         on-timeout = "loginctl lock-session";
       }
 
       {
-        timeout = 240; # 4mins
+        timeout = 900; # 15mins
         on-timeout = "hyprctl dispatch dpms off";
         on-resume = "hyprctl dispatch dpms on";
       }
 
       {
-        timeout = 540; # 9mins
+        timeout = 1800; # 30mins
         on-timeout = "$suspend_cmd";
       }
     ];

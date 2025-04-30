@@ -17,10 +17,4 @@
     };
   };
   services.gnome-keyring.enable = true;
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      "text/uri-list" = "thorium-browser.desktop";
-    };
-  };
 }
