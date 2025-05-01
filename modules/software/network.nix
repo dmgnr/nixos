@@ -21,6 +21,8 @@
   networking.firewall.enable = false;
 
   hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
 
   services.avahi = {
     nssmdns4 = true;
