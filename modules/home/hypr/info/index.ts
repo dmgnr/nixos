@@ -62,7 +62,7 @@ async function getMemPercent() {
 async function getNetwork() {
   const out = await $`nmcli -g general.connection d show wlp2s0`.text();
   const network = out.trim();
-  if (!network) return { format: "", class: "net" };
+  if (!network) return { format: "", class: "disconnected" };
   return { format: "", tooltip: network, class: "net", network };
 }
 
