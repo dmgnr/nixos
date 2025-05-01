@@ -9,8 +9,10 @@
   services.tailscale.enable = true;
   # "100.100.100.100" "45.90.28.164" "45.90.30.164"
   networking.nameservers = [
-    "8.8.8.8"
+    "45.90.28.164"
     "1.1.1.1"
+    "45.90.30.164"
+    "8.8.8.8"
   ];
   networking.search = [
     "tail71b97a.ts.net"
