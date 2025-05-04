@@ -1,7 +1,15 @@
 {
   programs.zed-editor = {
     enable = true;
-    extensions = [ "nix" ];
+    extensions = [
+      "nix"
+      "java"
+      "mcp-server-context7"
+      "mcp-server-puppeteer"
+      "mcp-server-sequential-thinking"
+      "modest-dark"
+      "symbols"
+    ];
     userSettings = {
       base_keymap = "VSCode";
       buffer_font_size = 12;
@@ -21,9 +29,19 @@
         metrics = false;
       };
       theme = {
-        dark = "One Dark";
-        light = "Catppuccin Macchiato";
+        dark = "Modest Dark";
+        light = "Modest Dark";
         mode = "system";
+      };
+      icon_theme = {
+        mode = "system";
+        light = "Symbols";
+        dark = "Symbols";
+      };
+      autosave = {
+        after_delay = {
+          milliseconds = 100;
+        };
       };
       ui_font_size = 14;
     };
