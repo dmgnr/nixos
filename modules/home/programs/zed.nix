@@ -4,7 +4,7 @@
     extensions = [ "nix" ];
     userSettings = {
       base_keymap = "VSCode";
-      buffer_font_size = 16;
+      buffer_font_size = 12;
       features = {
         edit_prediction_provider = "zed";
       };
@@ -25,7 +25,7 @@
         light = "Catppuccin Macchiato";
         mode = "system";
       };
-      ui_font_size = 16;
+      ui_font_size = 14;
     };
   };
 }
