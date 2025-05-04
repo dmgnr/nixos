@@ -9,5 +9,6 @@
     ./yazi.nix
     ./micro.nix
     ./nix.nix
+    ./zed.nix
   ];
 }

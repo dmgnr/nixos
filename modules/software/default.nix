@@ -8,6 +8,7 @@
     ./users.nix
     ./virt.nix
     ./theme.nix
+    ./services.nix
     ./windows
   ];
 }
