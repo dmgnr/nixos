@@ -23,6 +23,7 @@
     bibata-cursors
     adwaita-qt
     adwaita-qt6
+    xdg-desktop-portal-gtk
   ];
 
   fonts.packages = with pkgs; [

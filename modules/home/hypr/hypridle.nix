@@ -14,7 +14,7 @@
       {
         timeout = 300; # 5mins
         on-timeout = "brightnessctl -s s 10%";
-        on-resumt = "brightnessctl -r";
+        on-resume = "brightnessctl -r";
       }
 
       {
