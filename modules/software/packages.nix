@@ -24,6 +24,7 @@
     adwaita-qt
     adwaita-qt6
     xdg-desktop-portal-gtk
+    libsecret
   ];
 
   fonts.packages = with pkgs; [
