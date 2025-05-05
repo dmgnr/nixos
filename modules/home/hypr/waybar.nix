@@ -17,7 +17,6 @@
       modules-right = [
         "mpris"
         "group/group-info"
-        "tray"
         "clock"
       ];
       "hyprland/window" = {
@@ -146,6 +145,7 @@
           "cpu"
           "memory"
           "battery"
+          "tray"
         ];
         orientation = "inherit";
       };
