@@ -1,10 +1,8 @@
 {
-  config,
-  inputs,
   pkgs,
   ...
 }: let
-  myUser = "gaurav"; #adjust this to your username
+  myUser = "dgnr"; #adjust this to your username
   command = "bin/nbfc_service --config-file '/home/${myUser}/.config/nbfc.json'";
 in {
   environment.systemPackages = with pkgs; [
@@ -22,7 +20,7 @@ in {
     # if you are on stable uncomment the next line
     #  script = "${inputs.nbfc-linux.packages.x86_64-linux.default}/${command}";
     # if you are on unstable uncomment the next line
-    #script = "${pkgs.nbfc-linux}/${command}";
+    script = "${pkgs.nbfc-linux}/${command}";
    
     wantedBy = ["multi-user.target"];
   };
