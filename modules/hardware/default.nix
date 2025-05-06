@@ -5,6 +5,5 @@
     ./hdd.nix
     ./ram.nix
     ./sound.nix
-    ./fan.nix
   ];
 }

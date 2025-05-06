@@ -1,3 +1,4 @@
+{pkgs, ...}:
 {
   programs.zed-editor = {
     enable = true;
@@ -45,5 +46,6 @@
       };
       ui_font_size = 14;
     };
+    package = pkgs.zed-editor-fhs;
   };
 }
