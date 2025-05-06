@@ -13,123 +13,120 @@
     general = {
       immediate_render = true;
       hide_cursor = true;
+      ignore_empty_input = true;
     };
     auth = {
       "fingerprint:enabled" = true;
     };
     background = {
-      color = "rgba(181818FF)";
-      # path = {{ SWWW_WALL }}
+      monitor = "";
+      color = "rgba(1b6bbfFF)";
 
       path = "${./assets/bg-blank.jpg}";
+      blur_passes = 0;
+      contrast = 0.8916;
+      brightness = 0.8172;
+      vibrancy = 0.1696;
+      vibrancy_darkness = 0.0;
       # blur_size = 15
       # blur_passes = 4
     };
-    input-field = {
-      monitor = "";
-      size = "250, 50";
-      outline_thickness = 2;
-      dots_size = 0.1;
-      dots_spacing = 0.3;
-      outer_color = "$entry_border_color";
-      inner_color = "$entry_background_color";
-      font_color = "$entry_color";
-      fade_on_empty = true;
-      position = "0, 20";
-      halign = "center";
-      valign = "center";
-    };
 
+    # Time-Hour
     label = [
       {
-        # Clock
         monitor = "";
-        text = "$TIME";
-        color = "$text_color";
-        font_size = 65;
-        font_family = "$font_family_clock";
-
-        position = "0, 300";
-        halign = "center";
-        valign = "center";
-      }
-      {
-        # Date
-        monitor = "";
-        text = "cmd[update:5000] date +\"%A, %B %d\"";
-        color = "$text_color";
-        font_size = 17;
-        font_family = "$font_family";
-
-        position = "0, 240";
+        text = "cmd[update:1000] echo \"<span>$(date +\"%I\")</span>\"";
+        color = "rgba(255, 255, 255, 1)";
+        font_size = 125;
+        font_family = "StretchPro";
+        position = "80, 190";
         halign = "center";
         valign = "center";
       }
 
+      # Time-Minute
       {
-        # User
+        monitor = "";
+        text = "cmd[update:1000] echo \"<span>$(date +\"%M\")</span>\"";
+        color = "rgba(147, 196, 255, 1)";
+        font_size = 125;
+        font_family = "StretchPro";
+        position = "0, 70";
+        halign = "center";
+        valign = "center";
+      }
+
+      # Day-Month-Date
+      {
+        monitor = "";
+        text = "cmd[update:1000] echo -e \"$(date +\"%d %B, %a.\")\"";
+        color = "rgba(255, 255, 255, 100)";
+        font_size = 22;
+        font_family = "Suisse Int'l Mono";
+        position = "20, -8";
+        halign = "center";
+        valign = "center";
+      }
+
+      # USER
+      {
         monitor = "";
         text = "    $USER";
-        color = "$text_color";
-        shadow_passes = 1;
-        shadow_boost = 0.35;
+        color = "rgba(216, 222, 233, 0.80)";
         outline_thickness = 2;
         dots_size = 0.2; # Scale of input-field height, 0.2 - 0.8
         dots_spacing = 0.2; # Scale of dots' absolute size, 0.0 - 1.0
         dots_center = true;
-        font_size = 20;
-        font_family = "$font_family";
-        position = "0, 50";
+        font_size = 22;
+        font_family = "SF Pro Display Bold";
+        position = "0, -220";
+        halign = "center";
+        valign = "center";
+      }
+
+      # CURRENT SONG
+      {
+        monitor = "";
+        text = "cmd[update:1000] echo \"$(~/.config/hypr/hyprlock/status.sh)\" ";
+        color = "rgba(147, 196, 255, 1)";
+        font_size = 18;
+        font_family = "JetBrains Mono Nerd, SF Pro Display Bold";
+        position = "0, 20";
         halign = "center";
         valign = "bottom";
       }
-
-      {
-        # Status
-        monitor = "";
-        text = "cmd[update:5000] \${XDG_CONFIG_HOME:-$HOME/.config}/hypr/hyprlock/status.sh";
-        color = "$text_color";
-        font_size = 14;
-        font_family = "$font_family";
-
-        position = "30, -30";
-        halign = "left";
-        valign = "top";
-      }
     ];
+
+    # INPUT FIELD
+    input-field = {
+      monitor = "";
+      size = "300, 60";
+      outline_thickness = 2;
+      dots_size = 0.2; # Scale of input-field height, 0.2 - 0.8
+      dots_spacing = 0.2; # Scale of dots' absolute size, 0.0 - 1.0
+      dots_center = true;
+      outer_color = "rgba(0, 0, 0, 0)";
+      inner_color = "rgba(255, 255, 255, 0.1)";
+      font_color = "rgb(200, 200, 200)";
+      fade_on_empty = false;
+      font_family = "SF Pro Display Bold";
+      placeholder_text = "<i><span foreground=\"##ffffff99\">🔒 Enter Pass</span></i>";
+      hide_input = false;
+      position = "0, -290";
+      halign = "center";
+      valign = "center";
+    };
   };
+
   home.file."${config.xdg.configHome}/hypr/hyprlock/status.sh" = {
     executable = true;
     text = ''
-      #!/usr/bin/env bash
+      #!/bin/bash
 
-      ############ Variables ############
-      enable_battery=false
-      battery_charging=false
+      song_info=$(playerctl metadata --format '{{title}}      {{artist}}')
 
-      ####### Check availability ########
-      for battery in /sys/class/power_supply/*BAT*; do
-        if [[ -f "$battery/uevent" ]]; then
-          enable_battery=true
-          if [[ $(cat /sys/class/power_supply/*/status | head -1) == "Charging" ]]; then
-            battery_charging=true
-          fi
-          break
-        fi
-      done
-
-      ############# Output #############
-      if [[ $enable_battery == true ]]; then
-        if [[ $battery_charging == true ]]; then
-          echo -n "(+) "
-        fi
-        echo -n "$(cat /sys/class/power_supply/*/capacity | head -1)"%
-        if [[ $battery_charging == false ]]; then
-          echo -n " remaining"
-        fi
-      fi
-
-      echo ""
+      echo "$song_info"
     '';
   };
 }
