@@ -104,5 +104,15 @@
           ];
         }
       );
+      checks = nixpkgs.lib.genAttrs [ "x86_64-linux" ] (
+        system:
+        let
+          inherit (nixpkgs) lib;
+          nixosMachines = lib.mapAttrs' (
+            name: config: lib.nameValuePair "nixos-${name}" config.config.system.build.toplevel
+          ) ((lib.filterAttrs (_: config: config.pkgs.system == system)) self.nixosConfigurations);
+        in
+        nixosMachines
+      );
     };
 }
