@@ -15,9 +15,6 @@
       hide_cursor = true;
       ignore_empty_input = true;
     };
-    auth = {
-      "fingerprint:enabled" = true;
-    };
     background = {
       monitor = "";
       color = "rgba(16336fFF)";
@@ -233,20 +230,6 @@
         zindex = 1;
       }
 
-      # PFP Image
-      {
-        monitor = "";
-        path = "\$HOME/.config/hypr/hyprlock/pfp.jpg";
-        size = 100;
-        rounding = -1;
-        border_size = 3;
-        border_color = "rgba(FFFFFFFF)";
-        position = "10, 10";
-        halign = "left";
-        valign = "bottom";
-        zindex = 3;
-      }
-
       # PLAYER BOX
       {
         monitor = "";
@@ -260,20 +243,36 @@
       }
     ];
     # PLAYER IMAGE
-    image = {
-      monitor = "";
-      path = "\$HOME/.config/hypr/hyprlock/music.webp";
-      size = 60; # lesser side if not 1:1 ratio
-      rounding = 5; # negative values mean circle
-      border_size = 0;
-      rotate = 0; # degrees, counter-clockwise
-      reload_time = 2;
-      reload_cmd = "${./assets/blazinscripts.sh} -music --arturl";
-      position = "-106, 0";
-      halign = "center";
-      valign = "center";
-      zindex = 1;
-    };
+    image = [
+      {
+        monitor = "";
+        path = "${./assets/music.webp}";
+        size = 60; # lesser side if not 1:1 ratio
+        rounding = 5; # negative values mean circle
+        border_size = 0;
+        rotate = 0; # degrees, counter-clockwise
+        reload_time = 2;
+        reload_cmd = "${./assets/blazinscripts.sh} -music --arturl";
+        position = "-106, 0";
+        halign = "center";
+        valign = "center";
+        zindex = 1;
+      }
+
+      # PFP Image
+      {
+        monitor = "";
+        path = "${./assets/me.jpg}";
+        size = 100;
+        rounding = -1;
+        border_size = 3;
+        border_color = "rgba(FFFFFFFF)";
+        position = "10, 10";
+        halign = "left";
+        valign = "bottom";
+        zindex = 3;
+      }
+    ];
   };
 
   home.file."${config.xdg.configHome}/hypr/hyprlock/status.sh" = {
