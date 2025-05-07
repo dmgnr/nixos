@@ -20,7 +20,7 @@
       color = "rgba(16336fFF)";
 
       path = "${./assets/bg-blank.jpg}";
-      blur_passes = 0;
+      blur_passes = 1;
       contrast = 0.8916;
       brightness = 0.8172;
       vibrancy = 0.1696;
@@ -149,8 +149,8 @@
         color = "rgba(255, 255, 255, 0.8)";
         font_size = 14;
         font_family = "JetBrains Mono Nerd Font Mono ExtraBold";
-        position = "45, -6";
-        halign = "center";
+        position = "47%, -6";
+        halign = "left";
         valign = "center";
         zindex = 1;
       }
@@ -188,8 +188,8 @@
         color = "rgba(255, 255, 255, 0.8)";
         font_size = 12;
         font_family = "JetBrains Mono Nerd Font Mono";
-        position = "10, -23";
-        halign = "center";
+        position = "46%, -23";
+        halign = "left";
         valign = "center";
         zindex = 1;
       }
