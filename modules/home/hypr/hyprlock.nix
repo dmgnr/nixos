@@ -41,7 +41,7 @@
       fail_color = "rgba(22222299)";
       inner_color = "rgba(255, 255, 255, 0.8)";
       font_color = "rgb(34, 34, 34)";
-      fade_on_empty = false;
+      fade_on_empty = true;
       font_family = "JetBrainsMono Nerd Font Mono";
       placeholder_text = "<i><span foreground=\"##222222\">Input Password...</span></i>";
       hide_input = false;
@@ -76,7 +76,7 @@
         color = "rgba(222222FF)";
         font_size = 14;
         font_family = "Maple Mono";
-        position = "-21, -8";
+        position = "-21, 18";
         halign = "right";
         valign = "bottom";
         zindex = 2;
@@ -85,13 +85,13 @@
       # Current Session Status
       {
         monitor = "";
-        text = "cmd[update:24000000] echo \"Session : \$XDG_SESSION_DESKTOP\"";
+        text = "cmd[update:0:1] echo \"Session : $XDG_SESSION_DESKTOP\"";
         #    shadow_passes = 1
         #    shadow_boost = 0.5
         color = "rgba(222222FF)";
         font_size = 12;
         font_family = "Jost Medium ";
-        position = "0, -5";
+        position = "0, 20";
         halign = "center";
         valign = "bottom";
         zindex = 2;
@@ -100,7 +100,7 @@
       # Username
       {
         monitor = "";
-        text = "\$USER";
+        text = "$USER";
         shadow_passes = 1;
         shadow_boost = 0.5;
         color = "rgba(FFFFFFFF)";
@@ -115,13 +115,13 @@
       # Hostname
       {
         monitor = "";
-        text = "cmd[update:24000000] echo \"@\$(uname -n)\"";
+        text = "cmd[update:0:1] echo \"@$(uname -n)\"";
         shadow_passes = 1;
         shadow_boost = 0.5;
         color = "rgba(FFFFFFBB)";
         font_size = 14;
         font_family = "Jost Bold Italic ";
-        position = "120, -20";
+        position = "120, 5";
         halign = "left";
         valign = "bottom";
         zindex = 2;
@@ -142,14 +142,14 @@
         zindex = 2;
       }
 
-      # PLAYER TITTLE
+      # PLAYER TITLE
       {
         monitor = "";
         text = "cmd[update:1000] echo \"\$(${./assets/blazinscripts.sh} -music --title)\"";
         color = "rgba(255, 255, 255, 0.8)";
         font_size = 14;
         font_family = "JetBrains Mono Nerd Font Mono ExtraBold";
-        position = "50, -12";
+        position = "-30, -6";
         halign = "center";
         valign = "center";
         zindex = 1;
@@ -162,7 +162,7 @@
         color = "rgba(255, 255, 255, 1)";
         font_size = 18;
         font_family = "JetBrains Mono Nerd Font Mono Bold";
-        position = "-50, -15";
+        position = "-50, -8";
         halign = "center";
         valign = "center";
         zindex = 1;
@@ -175,7 +175,7 @@
         color = "rgba(255, 255, 255, 0.6)";
         font_size = 10;
         font_family = "JetBrains Mono Nerd Font Mono ";
-        position = "-20, 16";
+        position = "10, 16";
         halign = "center";
         valign = "center";
         zindex = 1;
@@ -188,7 +188,7 @@
         color = "rgba(255, 255, 255, 0.8)";
         font_size = 12;
         font_family = "JetBrains Mono Nerd Font Mono";
-        position = "10, -35";
+        position = "10, -23";
         halign = "center";
         valign = "center";
         zindex = 1;
