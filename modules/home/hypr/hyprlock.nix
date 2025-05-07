@@ -149,7 +149,7 @@
         color = "rgba(255, 255, 255, 0.8)";
         font_size = 14;
         font_family = "JetBrains Mono Nerd Font Mono ExtraBold";
-        position = "-30, -6";
+        position = "45, -6";
         halign = "center";
         valign = "center";
         zindex = 1;
@@ -175,7 +175,7 @@
         color = "rgba(255, 255, 255, 0.6)";
         font_size = 10;
         font_family = "JetBrains Mono Nerd Font Mono ";
-        position = "10, 16";
+        position = "-20, 16";
         halign = "center";
         valign = "center";
         zindex = 1;
