@@ -23,6 +23,11 @@
       }
 
       {
+        timeout = 600; # 10mins
+        on-timeout = "brightnessctl s 1%";
+      }
+
+      {
         timeout = 900; # 15mins
         on-timeout = "hyprctl dispatch dpms off";
         on-resume = "hyprctl dispatch dpms on";

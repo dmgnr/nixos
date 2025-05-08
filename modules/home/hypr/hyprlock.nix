@@ -82,21 +82,6 @@
         zindex = 2;
       }
 
-      # Current Session Status
-      {
-        monitor = "";
-        text = "cmd[update:0:1] echo \"Session : $XDG_SESSION_DESKTOP\"";
-        #    shadow_passes = 1
-        #    shadow_boost = 0.5
-        color = "rgba(222222FF)";
-        font_size = 12;
-        font_family = "Jost Medium ";
-        position = "0, 20";
-        halign = "center";
-        valign = "bottom";
-        zindex = 2;
-      }
-
       # Username
       {
         monitor = "";
@@ -149,9 +134,9 @@
         color = "rgba(255, 255, 255, 0.8)";
         font_size = 14;
         font_family = "JetBrains Mono Nerd Font Mono ExtraBold";
-        position = "47%, -6";
+        position = "47%, 20";
         halign = "left";
-        valign = "center";
+        valign = "bottom";
         zindex = 1;
       }
 
@@ -162,9 +147,9 @@
         color = "rgba(255, 255, 255, 1)";
         font_size = 18;
         font_family = "JetBrains Mono Nerd Font Mono Bold";
-        position = "-50, -8";
+        position = "-50, 17";
         halign = "center";
-        valign = "center";
+        valign = "bottom";
         zindex = 1;
       }
 
@@ -175,9 +160,9 @@
         color = "rgba(255, 255, 255, 0.6)";
         font_size = 10;
         font_family = "JetBrains Mono Nerd Font Mono ";
-        position = "-20, 16";
+        position = "-20, 42";
         halign = "center";
-        valign = "center";
+        valign = "bottom";
         zindex = 1;
       }
 
@@ -188,9 +173,9 @@
         color = "rgba(255, 255, 255, 0.8)";
         font_size = 12;
         font_family = "JetBrains Mono Nerd Font Mono";
-        position = "46%, -23";
+        position = "46%, 5";
         halign = "left";
-        valign = "center";
+        valign = "bottom";
         zindex = 1;
       }
     ];
@@ -217,30 +202,6 @@
         position = "-14, 14";
         zindex = 1;
       }
-
-      # Small Rectangle for Session
-      {
-        monitor = "";
-        size = "150, 32";
-        rounding = 10;
-        color = "rgba(FFFFFFFF)";
-        halign = "center";
-        valign = "bottom";
-        position = "0, 14";
-        zindex = 1;
-      }
-
-      # PLAYER BOX
-      {
-        monitor = "";
-        color = "rgba(222222BB)";
-        size = "300, 84";
-        rounding = 10; # negative values mean circle
-        position = "0, 0";
-        halign = "center";
-        valign = "center";
-        zindex = 0;
-      }
     ];
     # PLAYER IMAGE
     image = [
@@ -253,9 +214,9 @@
         rotate = 0; # degrees, counter-clockwise
         reload_time = 2;
         reload_cmd = "${./assets/blazinscripts.sh} -music --arturl";
-        position = "-106, 0";
+        position = "-103, 0";
         halign = "center";
-        valign = "center";
+        valign = "bottom";
         zindex = 1;
       }
 
