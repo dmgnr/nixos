@@ -1,6 +1,5 @@
 {
   inputs = {
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # nix-index stuff
@@ -30,11 +29,16 @@
 
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    lix = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {
       self,
-      determinate,
+      lix,
       nixpkgs,
       nix-index-database,
       wpilib,
@@ -52,7 +56,6 @@
           system = "x86_64-linux";
           specialArgs = { inherit self system winapps; };
           modules = [
-            determinate.nixosModules.default
             ./configuration.nix
             ./modules
 
@@ -104,6 +107,9 @@
 
             # Lanzaboote
             lanzaboote.nixosModules.lanzaboote
+
+            # Lix
+            lix.nixosModules.default
           ];
         }
       );
