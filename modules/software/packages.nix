@@ -28,7 +28,23 @@
     libsecret
   ];
 
-  services.flatpak.enable = true;
+  services.flatpak = {
+    enable = true;
+    packages = [
+      "com.github.Anuken.Mindustry"
+      "com.github.cubitect.cubiomes-viewer"
+      "com.modrinth.ModrinthApp"
+      "it.mijorus.gearlever"
+      "org.unofficialrevport.REVHubInterface"
+      "org.vinegarhq.Sober"
+      "uk.co.powdertoy.tpt"
+      "com.obsproject.Studio"
+    ];
+    update.auto = {
+      enable = true;
+      onCalendar = "weekly"; # Default value
+    };
+  };
 
   programs.appimage = {
     enable = true;

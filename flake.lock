@@ -179,11 +179,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746040799,
-        "narHash": "sha256-osgPX/SzIpkR50vev/rqoTEAVkEcOWXoQXmbzsaI4KU=",
+        "lastModified": 1746798521,
+        "narHash": "sha256-axfz/jBEH9XHpS7YSumstV7b2PrPf7L8bhWUtLBv3nA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "5f217e5a319f6c186283b530f8c975e66c028433",
+        "rev": "e95a7c5b6fa93304cd2fd78cf676c4f6d23c422c",
         "type": "github"
       },
       "original": {
@@ -232,7 +232,7 @@
         "narHash": "sha256-MB/b/xcDKqaVBxJIIxwb81r8ZiGLeKEcqokATRRroo8=",
         "rev": "fa69ae26cc32dda178117b46487c2165c0e08316",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/nixos-module/archive/fa69ae26cc32dda178117b46487c2165c0e08316.tar.gz"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/nixos-module/archive/fa69ae26cc32dda178117b46487c2165c0e08316.tar.gz?rev=fa69ae26cc32dda178117b46487c2165c0e08316"
       },
       "original": {
         "type": "tarball",
@@ -242,11 +242,11 @@
     "lix_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1746793055,
-        "narHash": "sha256-HhBfd4juV3qwTMlEhQbgSw3+Qdy1aj4DLPUClT8UO5I=",
-        "rev": "3f3060ebeda9e6d6087241c4b5ab78eee8735a69",
+        "lastModified": 1742622332,
+        "narHash": "sha256-z652gNdFc/95Fheq4DzVObERYRo+j9RdCF6tzkR8r80=",
+        "rev": "6059cbb031e49e05dd5d16208e2e50d3ab2611db",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/3f3060ebeda9e6d6087241c4b5ab78eee8735a69.tar.gz"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/6059cbb031e49e05dd5d16208e2e50d3ab2611db.tar.gz?rev=6059cbb031e49e05dd5d16208e2e50d3ab2611db"
       },
       "original": {
         "type": "tarball",
@@ -270,6 +270,22 @@
       "original": {
         "owner": "thiagokokada",
         "repo": "nix-alien",
+        "type": "github"
+      }
+    },
+    "nix-flatpak": {
+      "locked": {
+        "lastModified": 1739444422,
+        "narHash": "sha256-iAVVHi7X3kWORftY+LVbRiStRnQEob2TULWyjMS6dWg=",
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "rev": "5e54c3ca05a7c7d968ae1ddeabe01d2a9bc1e177",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gmodena",
+        "ref": "latest",
+        "repo": "nix-flatpak",
         "type": "github"
       }
     },
@@ -322,11 +338,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746029363,
-        "narHash": "sha256-yBIWj5l5ha0GHmgJRdqq7fBuQIp3vKb1ELPPnLEUKRc=",
+        "lastModified": 1746330942,
+        "narHash": "sha256-ShizFaJCAST23tSrHHtFFGF0fwd72AG+KhPZFFQX/0o=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "4b221d92d4599a1c7a8820a394f3b15c5c354f35",
+        "rev": "137fd2bd726fff343874f85601b51769b48685cc",
         "type": "github"
       },
       "original": {
@@ -448,6 +464,7 @@
         "lanzaboote": "lanzaboote",
         "lix": "lix",
         "nix-alien": "nix-alien",
+        "nix-flatpak": "nix-flatpak",
         "nix-index-database": "nix-index-database_2",
         "nixpkgs": "nixpkgs_2",
         "thorium": "thorium",
@@ -526,14 +543,18 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "path": "./programs/thorium/",
-        "type": "path"
+        "lastModified": 1746827035,
+        "narHash": "sha256-qNcbd/mK6gfh32ODMJ/qYVuXn4iQ2aX3LL/D5EyWGgI=",
+        "owner": "dreamgineer",
+        "repo": "nix-thorium",
+        "rev": "79718abc2feaa35661be6909cbfb921a0e206f74",
+        "type": "github"
       },
       "original": {
-        "path": "./programs/thorium/",
-        "type": "path"
-      },
-      "parent": []
+        "owner": "dreamgineer",
+        "repo": "nix-thorium",
+        "type": "github"
+      }
     },
     "winapps": {
       "inputs": {

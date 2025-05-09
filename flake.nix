@@ -7,7 +7,7 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     wpilib.url = "github:frc4451/frc-nix";
-    thorium.url = "path:./programs/thorium/";
+    thorium.url = "github:dreamgineer/nix-thorium";
     nix-alien.url = "github:thiagokokada/nix-alien";
 
     home-manager = {
@@ -34,6 +34,8 @@
       url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
   outputs =
     {
@@ -46,6 +48,7 @@
       home-manager,
       winapps,
       lanzaboote,
+      nix-flatpak,
       ...
     }:
     {
@@ -110,6 +113,9 @@
 
             # Lix
             lix.nixosModules.default
+
+            # Flatpak
+            nix-flatpak.nixosModules.nix-flatpak
           ];
         }
       );
