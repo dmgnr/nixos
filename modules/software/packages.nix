@@ -9,6 +9,7 @@
     plymouth
     bun
     zulu23
+    zulu17 # For WPILib, should still default to 23 in global
     ntfs3g
     kdePackages.qtdeclarative
     ktailctl
