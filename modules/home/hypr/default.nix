@@ -23,7 +23,7 @@
     "$menud" = "tofi-drun";
     "$menu" = "$(tofi-run --require-match=false)";
     "$util" = "bun ${./util/index.ts}";
-    "$browser" = "thorium-avx";
+    "$browser" = "thorium";
 
     monitor = ",preferred,auto,auto";
 
