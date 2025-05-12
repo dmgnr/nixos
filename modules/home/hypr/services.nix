@@ -16,5 +16,18 @@
       ];
     };
   };
-  services.wluma.enable = true;
+  services.wluma = {
+    enable = true;
+    settings = {
+      als = {
+        time = {
+          thresholds = {
+            "0" = "night";
+            "8" = "day";
+            "18" = "night";
+          };
+        };
+      };
+    };
+  };
 }
