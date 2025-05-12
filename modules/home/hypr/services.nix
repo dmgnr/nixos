@@ -16,4 +16,5 @@
       ];
     };
   };
+  services.wluma.enable = true;
 }
