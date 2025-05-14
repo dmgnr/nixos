@@ -7,9 +7,6 @@
       completions.algorithm = "fuzzy";
     };
     configFile.source = ./assets/init.nu;
-    extraConfig = ''
-      $env.config.hooks.command_not_found = {f}
-    '';
     extraEnv = ''
       $env.PROMPT_COMMAND_RIGHT = ""
       $env.PROMPT_INDICATOR = " "
@@ -21,4 +18,7 @@
       profile = "system76-power profile";
     };
   };
+
+  # Manually enabled in init.nu
+  programs.pay-respects.enableNushellIntegration = false;
 }
