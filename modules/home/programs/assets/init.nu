@@ -35,8 +35,6 @@ let __is_custom_PROMPT_INDICATOR = {
 }
 $env.PROMPT_INDICATOR = $__is_custom_PROMPT_INDICATOR
 
-$env.config.hooks.command_not_found = {f}
-
 is
 clear
 if (($env.ISTERM? | default "0") != "1") { exit }
