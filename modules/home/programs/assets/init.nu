@@ -37,12 +37,26 @@ $env.PROMPT_INDICATOR = $__is_custom_PROMPT_INDICATOR
 
 # pay-respects
 def --env f [] {
-	let dir = (with-env { _PR_LAST_COMMAND: (history | last).command, _PR_ALIAS: (help aliases | select name expansion | each ({ |row| $row.name + "=" + $row.expansion }) | str join (char nl)), _PR_SHELL: nu } { /home/dgnr/.nix-profile/bin/pay-respects })
+	let dir = (with-env {
+        _PR_LAST_COMMAND: (history | last).command,
+        _PR_ALIAS: (help aliases | select name expansion | each ({ |row| $row.name + "=" + $row.expansion }) | str join (char nl)),
+        _PR_SHELL: nu,
+        _PR_PACKAGE_MANAGER: nix
+    } { ~/.nix-profile/bin/pay-respects })
 	cd $dir
 }
 
-$env.config.hooks.command_not_found = { f }
+$env.config.hooks.command_not_found = {
+    |command: string|
+	let dir = (with-env {
+        _PR_LAST_COMMAND: $command,
+        _PR_ALIAS: (help aliases | select name expansion | each ({ |row| $row.name + "=" + $row.expansion }) | str join (char nl)),
+        _PR_SHELL: nu,
+        _PR_PACKAGE_MANAGER: nix,
+        _PR_MODE: cnf
+    } { ~/.nix-profile/bin/pay-respects })
+	cd $dir
+}
 
 is
-clear
-if (($env.ISTERM? | default "0") != "1") { exit }
+if (($env.ISTERM? | default "0") != "1") { exit } else { clear }
