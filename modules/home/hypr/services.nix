@@ -22,9 +22,10 @@
       als = {
         time = {
           thresholds = {
-            "0" = "night";
-            "8" = "day";
-            "18" = "night";
+            "0" = "latenight";
+            "7" = "day";
+            "20" = "night";
+            "23" = "latenight";
           };
         };
       };
