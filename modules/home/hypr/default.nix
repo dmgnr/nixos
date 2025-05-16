@@ -93,6 +93,9 @@
     misc = {
       force_default_wallpaper = -1;
       disable_hyprland_logo = true;
+      enable_swallow = true;
+      swallow_regex = [ "kitty" ];
+      focus_on_activate = true;
     };
 
     # Input settings
