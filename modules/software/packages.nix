@@ -39,6 +39,7 @@
       "org.vinegarhq.Sober"
       "uk.co.powdertoy.tpt"
       "com.obsproject.Studio"
+      "org.speedcrunch.SpeedCrunch"
     ];
     update.auto = {
       enable = true;

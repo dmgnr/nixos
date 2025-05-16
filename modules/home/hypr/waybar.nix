@@ -54,6 +54,7 @@
       clock = {
         format-alt = "{:%Y-%m-%d}";
         actions = {
+          on-click = "shift_reset";
           on-click-right = "mode";
           on-scroll-down = "shift_down";
           on-scroll-up = "shift_up";
@@ -66,12 +67,13 @@
             weekdays = "<span color='#ffcc66'><b>{}</b></span>";
             weeks = "<span color='#99ffdd'><b>W{}</b></span>";
           };
-          mode = "year";
+          mode = "month";
           mode-mon-col = 3;
           on-scroll = 1;
           weeks-pos = "right";
         };
         tooltip-format = "<tt><small>{calendar}</small></tt>";
+        on-click = "hyprctl dispatch exec \"[size 350 400; move 100%-350 100%-418; ${ctl_opts} slide bottom]kitty\"";
       };
       cpu = {
         format = "{usage}%  ";
@@ -100,6 +102,7 @@
           "󰂂"
           "󰁹"
         ];
+        on-click = "hyprctl dispatch exec \"[size 350 400; move 100%-350 100%-418; ${ctl_opts} slide bottom]org.speedcrunch.SpeedCrunch\"";
       };
       "network" = {
         format-wifi = " ";
