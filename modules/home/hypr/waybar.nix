@@ -3,6 +3,7 @@
   programs.waybar.enable = true;
   programs.waybar.settings = [
     rec {
+      ctl_opts = "pin; float; stayfocused; dimaround; animation";
       layer = "top"; # Waybar at top layer
       "position" = "bottom"; # Waybar at the bottom of your screen
       "reload_style_on_change" = true;
@@ -74,7 +75,7 @@
       };
       cpu = {
         format = "{usage}%  ";
-        on-click = "hyprctl dispatch exec \"[float; size 90% 90%; pin; stayfocused; animation popin; dimaround]kitty btop\"";
+        on-click = "hyprctl dispatch exec \"[size 90% 90%; ${ctl_opts}; animation popin]kitty btop\"";
       };
       memory = {
         format = "{}%  ";
@@ -107,7 +108,7 @@
         tooltip-format-disconnected = "Not connected.";
         tooltip-format-wifi = "{essid} ({signalStrength}%) ";
         tooltip-format-ethernet = "{ifname} 🖧 ";
-        on-click = "hyprctl dispatch exec \"[float; size 350 400; move 100%-350 100%-418; pin; stayfocused; animation slide bottom; dimaround]kitty nmtui\"";
+        on-click = "hyprctl dispatch exec \"[size 350 400; move 100%-350 100%-418; ${ctl_opts} slide bottom]kitty nmtui\"";
       };
       "pulseaudio" = {
         #scroll-step = 1;
@@ -126,7 +127,7 @@
             ""
           ];
         };
-        on-click = "hyprctl dispatch exec \"[float; size 380 400; move 100%-400 100%-418; pin; stayfocused; animation slide bottom; dimaround]pavucontrol\"";
+        on-click = "hyprctl dispatch exec \"[size 380 400; move 100%-400 100%-418; ${ctl_opts} slide bottom]pavucontrol\"";
       };
       "custom/spotify" = {
         format = "{}  ";
