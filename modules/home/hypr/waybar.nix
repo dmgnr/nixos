@@ -74,7 +74,7 @@
       };
       cpu = {
         format = "{usage}%  ";
-        on-click = "hyprctl dispatch exec \"[float; size 90% 90%; pin; stayfocused]kitty btop\"";
+        on-click = "hyprctl dispatch exec \"[float; size 90% 90%; pin; stayfocused; animation popin; dimaround]kitty btop\"";
       };
       memory = {
         format = "{}%  ";
@@ -107,7 +107,7 @@
         tooltip-format-disconnected = "Not connected.";
         tooltip-format-wifi = "{essid} ({signalStrength}%) ";
         tooltip-format-ethernet = "{ifname} 🖧 ";
-        on-click = "hyprctl dispatch exec \"[float; size 350 400; move 100%-350 100%-418; pin; stayfocused]kitty nmtui\"";
+        on-click = "hyprctl dispatch exec \"[float; size 350 400; move 100%-350 100%-418; pin; stayfocused; animation slide bottom; dimaround]kitty nmtui\"";
       };
       "pulseaudio" = {
         #scroll-step = 1;
@@ -126,7 +126,7 @@
             ""
           ];
         };
-        on-click = "hyprctl dispatch exec \"[float; size 380 400; move 100%-400 100%-418; pin; stayfocused]pavucontrol\"";
+        on-click = "hyprctl dispatch exec \"[float; size 380 400; move 100%-400 100%-418; pin; stayfocused; animation slide bottom; dimaround]pavucontrol\"";
       };
       "custom/spotify" = {
         format = "{}  ";
