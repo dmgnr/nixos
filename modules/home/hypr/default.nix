@@ -24,6 +24,7 @@
     "$menu" = "$(tofi-run --require-match=false)";
     "$util" = "bun ${./util/index.ts}";
     "$browser" = "thorium";
+    "$qalc" = "pkill qalc; hyprctl dispatch exec \"[size 350 400; move 100%-350 100%-420; pin; float; stayfocused; dimaround; animation slide bottom]kitty qalc\"";
 
     monitor = ",preferred,auto,auto";
 
@@ -141,6 +142,7 @@
         "$mod, down, movefocus, d"
         "$mod, G, togglegroup," # Toggle group on active window
         "$mod, TAB, changegroupactive," # Move into group
+        "$mod, C, exec, $qalc"
         # ...additional keybindings from hyprland.conf...
       ]
       ++ (
