@@ -27,6 +27,7 @@
     xdg-desktop-portal-gtk
     libsecret
     libqalculate
+    spotify
   ];
 
   services.flatpak = {
