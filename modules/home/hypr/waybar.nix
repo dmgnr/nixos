@@ -73,7 +73,7 @@
           weeks-pos = "right";
         };
         tooltip-format = "<tt><small>{calendar}</small></tt>";
-        on-click = "hyprctl dispatch exec \"[size 350 400; move 100%-350 100%-420; ${ctl_opts} slide bottom]kitty\"";
+        on-click = "hyprctl dispatch exec \"[size 350 400; move 100%-350 100%-420; ${ctl_opts} slide bottom]kitty\"; pkill --signal 12 waybar";
       };
       cpu = {
         format = "{usage}%  ";
