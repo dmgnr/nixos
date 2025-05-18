@@ -66,6 +66,15 @@
     enable = true;
     defaultApplications = {
       "text/uri-list" = "thorium-browser.desktop";
+      "inode/directory" = "yazi.desktop";
+    };
+  };
+  xdg.portal.config = {
+    hyprland = {
+      default = [
+        "hyprland"
+        "gtk"
+      ];
     };
   };
 }

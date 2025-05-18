@@ -13,5 +13,20 @@
       package = (pkgs.fluent-gtk-theme.override { colorVariants = [ "dark" ]; });
     };
   };
-  qt.style.name = "adwaita-dark";
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+    style = {
+      name = "Adwaita-Dark";
+      package = pkgs.adwaita-qt;
+    };
+  };
+
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      gtk-theme = "Fluent";
+      color-scheme = "prefer-dark";
+      icon-theme = "Papirus-Dark";
+    };
+  };
 }
