@@ -10,5 +10,6 @@
     ./theme.nix
     ./services.nix
     ./windows
+    ./packages/rust.nix
   ];
 }
