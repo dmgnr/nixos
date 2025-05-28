@@ -74,6 +74,7 @@
                   wpilib.packages.${system}.glass
                   wpilib.packages.${system}.advantagescope
                   wpilib.packages.${system}.vscode-wpilib
+                  wpilib.packages.${system}.sysid
                   thorium.packages.${system}.default
                 ];
               }
