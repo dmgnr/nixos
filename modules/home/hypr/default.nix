@@ -13,7 +13,7 @@
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.systemd.extraCommands = [
     "hyprctl setcursor Bibata-Modern-Classic 24"
-    "systemctl --user enable --now hyprpolkitagent hypridle hyprpaper swaync waybar wluma"
+    "systemctl --user enable --now hyprpolkitagent hypridle hyprpaper swaync waybar"
     "hyprlock & kitty & kdeconnectd & kdeconnect-indicator & blueman-applet"
   ];
   wayland.windowManager.hyprland.settings = {
