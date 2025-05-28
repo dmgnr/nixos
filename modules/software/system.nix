@@ -15,12 +15,13 @@
       ];
     };
   };
-  
+
   services.system76-scheduler.enable = true;
   hardware.system76.power-daemon.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/New_York";
+  services.timesyncd.fallbackServers = [ "cdga-dc1.canandaiguaschools.org" ];
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
