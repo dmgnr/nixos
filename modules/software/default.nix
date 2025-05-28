@@ -11,5 +11,6 @@
     ./services.nix
     ./windows
     ./packages/rust.nix
+    ./ld.nix
   ];
 }
