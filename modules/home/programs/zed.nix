@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ lib, pkgs, ... }:
 {
   programs.zed-editor = {
     enable = true;
@@ -8,12 +8,11 @@
       "mcp-server-context7"
       "mcp-server-puppeteer"
       "mcp-server-sequential-thinking"
-      "modest-dark"
       "symbols"
     ];
     userSettings = {
       base_keymap = "VSCode";
-      buffer_font_size = 12;
+      buffer_font_size = lib.mkForce 12;
       features = {
         edit_prediction_provider = "zed";
       };
@@ -29,11 +28,6 @@
         diagnostics = false;
         metrics = false;
       };
-      theme = {
-        dark = "Modest Dark";
-        light = "Modest Dark";
-        mode = "system";
-      };
       icon_theme = {
         mode = "system";
         light = "Symbols";
@@ -44,7 +38,7 @@
           milliseconds = 100;
         };
       };
-      ui_font_size = 14;
+      ui_font_size = lib.mkForce 14;
     };
     package = pkgs.zed-editor-fhs;
   };

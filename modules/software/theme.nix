@@ -1,10 +1,6 @@
 { pkgs, ... }:
 {
-  qt = {
-    style = "adwaita-dark";
-    enable = true;
-    platformTheme = "gnome";
-  };
+  qt.enable = true;
 
   fonts.packages = with pkgs; [
     nerd-fonts.ubuntu
@@ -14,4 +10,14 @@
     jost
     maple-mono.truetype
   ];
+
+  stylix = {
+    enable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-dark.yaml";
+    image = ../home/hypr/assets/bg.png;
+    polarity = "dark";
+    targets = {
+      plymouth.enable = false;
+    };
+  };
 }

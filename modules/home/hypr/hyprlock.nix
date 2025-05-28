@@ -1,4 +1,4 @@
-{ config, ... }:
+{ lib, config, ... }:
 {
   programs.hyprlock.enable = true;
   programs.hyprlock.settings = {
@@ -17,7 +17,6 @@
     };
     background = {
       monitor = "";
-      color = "rgba(16336fFF)";
 
       path = "${./assets/bg-blank.jpg}";
       blur_passes = 1;
@@ -37,10 +36,8 @@
       dots_size = 0.2; # Scale of input-field height, 0.2 - 0.8
       dots_spacing = 0.2; # Scale of dots' absolute size, 0.0 - 1.0
       dots_center = true;
-      outer_color = "rgba(22222299)";
-      fail_color = "rgba(22222299)";
-      inner_color = "rgba(255, 255, 255, 0.8)";
-      font_color = "rgb(34, 34, 34)";
+      outer_color = lib.mkForce "rgba(22222299)";
+      inner_color = lib.mkForce "rgba(255, 255, 255, 0.8)";
       fade_on_empty = true;
       font_family = "JetBrainsMono Nerd Font Mono";
       placeholder_text = "<i><span foreground=\"##222222\">Input Password...</span></i>";

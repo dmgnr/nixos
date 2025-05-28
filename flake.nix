@@ -36,6 +36,11 @@
     };
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {
@@ -49,6 +54,7 @@
       winapps,
       lanzaboote,
       nix-flatpak,
+      stylix,
       ...
     }:
     {
@@ -59,6 +65,7 @@
           system = "x86_64-linux";
           specialArgs = { inherit self system winapps; };
           modules = [
+            stylix.nixosModules.stylix
             ./configuration.nix
             ./modules
 
