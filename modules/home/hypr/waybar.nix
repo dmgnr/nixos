@@ -16,6 +16,7 @@
       ];
       modules-center = [ ];
       modules-right = [
+        "cava"
         "mpris"
         "group/group-info"
         "clock"
@@ -132,14 +133,6 @@
         };
         on-click = "hyprctl dispatch exec \"[size 380 400; move 100%-400 100%-418; ${ctl_opts} slide bottom]pavucontrol\"";
       };
-      "custom/spotify" = {
-        format = "{}  ";
-        max-length = 20;
-        interval = 30; # Remove this if your script is endless and write in loop
-        exec = "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null"; # Script in resources folder
-        hide-empty-text = true;
-        on-click = "playerctl play-pause";
-      };
       "custom/info" = {
         exec = "bun ${./info/index.ts}";
         restart-interval = 5;
@@ -172,6 +165,36 @@
           "tray"
         ];
         orientation = "inherit";
+      };
+      cava = {
+        actions = {
+          on-click-right = "mode";
+        };
+        autosens = 1;
+        bar_delimiter = 0;
+        bars = 7;
+        format-icons = [
+          "⠀"
+          "⣀"
+          "⣄"
+          "⣤"
+          "⣦"
+          "⣶"
+          "⣷"
+          "⣿"
+        ];
+        framerate = 30;
+        higher_cutoff_freq = 10000;
+        input_delay = 2;
+        lower_cutoff_freq = 50;
+        method = "pipewire";
+        monstercat = false;
+        noise_reduction = 0.5;
+        reverse = true;
+        source = "auto";
+        stereo = false;
+        waves = false;
+        hide_on_silence = true;
       };
     }
   ];
