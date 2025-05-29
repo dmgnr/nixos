@@ -53,7 +53,7 @@ async function getMemPercent() {
   const available =
     1024 *
     Number(
-      (await file("/proc/meminfo").text()).match(/MemAvailable:[ ]+(\d+)/)
+      (await file("/proc/meminfo").text()).match(/MemAvailable:[ ]+(\d+)/),
     );
   const used = 1 - available / totalmem();
   return { text: `${Math.round(used * 100)}% `, perc: used };
@@ -74,85 +74,101 @@ async function getNotification() {
   }
 }
 
-var lastVolume: number | null = null;
-var lastNetwork: string | null = null;
-var volumeTimer = 0,
-  networkTimer = 0,
-  last = "";
-async function run() {
-  try {
-    const bat = await getBatPercent();
-    const mem = await getMemPercent();
-    const net = await getNetwork();
-    const cpu = getCpuPercent();
-    const vol = await getVolume();
-    const ntf = await getNotification();
-    if (lastVolume === null) lastVolume = vol.volume;
-    if (vol.volume != lastVolume) volumeTimer = Date.now() + 3000;
-    if (net.network && lastNetwork === null) lastNetwork = net.network;
-    if (net.network != lastNetwork) networkTimer = Date.now() + 3000;
-    var res = {
-      text: "",
-      alt: "",
-      tooltip: "",
-      class: "",
-      percentage: 0,
-    };
-    if (Date.now() < volumeTimer) {
-      res.text = vol.text;
-      res.tooltip = "Volume: " + vol.volume + "%";
-      res.class = "vol";
-      lastVolume = vol.volume;
-    } else if (net.network && Date.now() < networkTimer) {
-      res.text = net.network + " " + net.format;
-      res.class = net.class;
-      lastNetwork = net.network;
-    } else if (bat.low) {
-      res.text = bat.text;
-      res.tooltip = "Battery low";
-      res.class =
-        "bat" +
-        (bat.discharging
-          ? bat.percent < 15
-            ? "critical"
-            : bat.percent < 25
-            ? "warning"
-            : ""
-          : "");
-    } else if (mem.perc > 0.85) {
-      res.text = mem.text;
-      res.class = "mem";
-    } else if (net.class == "disconnected") {
-      res.text = net.format;
-      res.tooltip = "Disconnected";
-      res.class = "net";
-    } else if (cpu.perc > 70) {
-      res.text = cpu.text;
-      res.class = "cpu";
-    } else if (vol.muted || vol.volume > 70) {
-      res.text = vol.text;
-      res.tooltip = "Volume: " + vol.volume + "%";
-      res.class = "vol";
-    } else {
-      res.text = (ntf ? ntf + " " : "") + "";
-      // No class to make it transparent
-    }
-    const out = JSON.stringify(res);
-    if (out == last) return;
-    last = out;
-    console.log(out);
-  } catch (e) {
-    console.log(
-      JSON.stringify({
-        text: "",
-        alt: "err",
-        tooltip: `${e}`,
-        class: "err",
+function smart() {
+  var lastVolume: number | null = null;
+  var lastNetwork: string | null = null;
+  var volumeTimer = 0,
+    networkTimer = 0,
+    last = "";
+  async function run() {
+    try {
+      const bat = await getBatPercent();
+      const mem = await getMemPercent();
+      const net = await getNetwork();
+      const cpu = getCpuPercent();
+      const vol = await getVolume();
+      const ntf = await getNotification();
+      if (lastVolume === null) lastVolume = vol.volume;
+      if (vol.volume != lastVolume) volumeTimer = Date.now() + 3000;
+      if (net.network && lastNetwork === null) lastNetwork = net.network;
+      if (net.network != lastNetwork) networkTimer = Date.now() + 3000;
+      var res = {
+        text: "",
+        alt: "",
+        tooltip: "",
+        class: "",
         percentage: 0,
-      })
-    );
+      };
+      if (Date.now() < volumeTimer) {
+        res.text = vol.text;
+        res.tooltip = "Volume: " + vol.volume + "%";
+        res.class = "vol";
+        lastVolume = vol.volume;
+      } else if (net.network && Date.now() < networkTimer) {
+        res.text = net.network + " " + net.format;
+        res.class = net.class;
+        lastNetwork = net.network;
+      } else if (bat.low) {
+        res.text = bat.text;
+        res.tooltip = "Battery low";
+        res.class =
+          "bat" +
+          (bat.discharging
+            ? bat.percent < 15
+              ? "critical"
+              : bat.percent < 25
+                ? "warning"
+                : ""
+            : "");
+      } else if (mem.perc > 0.85) {
+        res.text = mem.text;
+        res.class = "mem";
+      } else if (net.class == "disconnected") {
+        res.text = net.format;
+        res.tooltip = "Disconnected";
+        res.class = "net";
+      } else if (cpu.perc > 70) {
+        res.text = cpu.text;
+        res.class = "cpu";
+      } else if (vol.muted || vol.volume > 70) {
+        res.text = vol.text;
+        res.tooltip = "Volume: " + vol.volume + "%";
+        res.class = "vol";
+      } else {
+        res.text = (ntf ? ntf + " " : "") + "";
+        // No class to make it transparent
+      }
+      const out = JSON.stringify(res);
+      if (out == last) return;
+      last = out;
+      console.log(out);
+    } catch (e) {
+      console.log(
+        JSON.stringify({
+          text: "",
+          alt: "err",
+          tooltip: `${e}`,
+          class: "err",
+          percentage: 0,
+        }),
+      );
+    }
   }
-}
 
-setInterval(run, 1000);
-run();
+  setInterval(run, 1000);
+  run();
+}
+switch (process.argv[3]) {
+  case "mpris":
+    // to be implemented
+    break;
+  default:
+  case "smart":
+    smart();
+}
+type Module = () =>
+  | Promise<
+      { text: string; alt?: string; tooltip: string; class: string } | false
+    >
+  | { text: string; alt?: string; tooltip: string; class: string }
+  | false;

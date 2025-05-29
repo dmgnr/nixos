@@ -147,9 +147,8 @@
         on-click = "swaync-client -t";
       };
       mpris = {
-        format = "{dynamic} {player_icon}";
-        format-paused = "<i>{dynamic}</i> {status_icon}";
-        dynamic-len = 30;
+        format = "{player_icon}";
+        format-paused = "{status_icon}";
         player-icons = {
           default = "";
           mpv = "󰎆";
