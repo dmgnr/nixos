@@ -136,7 +136,7 @@ function smart() {
         res.class = "vol";
       } else {
         res.text = (ntf ? ntf + " " : "") + "";
-        // No class to make it transparent
+        res.class = "ntf";
       }
       const out = JSON.stringify(res);
       if (out == last) return;
