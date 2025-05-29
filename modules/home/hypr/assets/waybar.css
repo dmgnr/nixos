@@ -133,7 +133,7 @@ window#waybar {
 }
 
 #custom-info {
-  transition-property: background;
+  transition-property: all;
   transition-duration: 0.5s;
 }
 #custom-info.ntf {
