@@ -38,6 +38,7 @@
       dots_center = true;
       outer_color = lib.mkForce "rgba(22222299)";
       inner_color = lib.mkForce "rgba(255, 255, 255, 0.8)";
+      font_color = lib.mkForce "rgb(34, 34, 34)";
       fade_on_empty = true;
       font_family = "JetBrainsMono Nerd Font Mono";
       placeholder_text = "<i><span foreground=\"##222222\">Input Password...</span></i>";
