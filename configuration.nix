@@ -6,6 +6,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./modules/hardware/disko.nix  
   ];
   
   # This value determines the NixOS release from which the default
