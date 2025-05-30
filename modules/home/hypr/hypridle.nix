@@ -2,12 +2,13 @@
 {
   services.hypridle.enable = true;
   services.hypridle.settings = {
-    "$lock_cmd" = "pidof hyprlock || hyprlock";
+    "$lock_cmd" = "pidof hyprlock || hyprlock -q --no-fade-in --immediate";
     "$suspend_cmd" = "pidof steam || systemctl suspend || loginctl suspend"; # fuck nvidia
 
     general = {
       lock_cmd = "$lock_cmd";
-      before_sleep_cmd = "loginctl lock-session";
+      before_sleep_cmd = "$lock_cmd";
+      inhibit_sleep	= 3;
     };
 
     listener = [
