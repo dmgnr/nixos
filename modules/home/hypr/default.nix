@@ -41,6 +41,10 @@
       layout = "dwindle";
     };
 
+    xwayland = {
+      create_abstract_socket = true;
+    };
+
     # Decoration settings
     decoration = {
       rounding = 1;
@@ -135,7 +139,7 @@
         "$mod SHIFT, R, exec, $menu"
         "$mod, F, exec, $util"
         "$mod, T, exec, $browser"
-        "$mod, P, pseudo,"
+        "$mod, P, pin,"
         "$mod, J, togglesplit,"
         "$mod, left, movefocus, l"
         "$mod, right, movefocus, r"
