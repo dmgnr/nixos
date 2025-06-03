@@ -200,6 +200,7 @@
       "pin, title:^(Picture in picture)$"
       "noborder, onworkspace:w[tv1] f[-1], floating:0"
       "float, maximize, pin, class:^(waydroid\\.)(.+)$"
+      "float, class:^(.+)\\.exe$"
     ];
 
     # Waybar blur
