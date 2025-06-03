@@ -14,7 +14,7 @@
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
   environment.systemPackages = with pkgs; [
-    wineWowPackages.full
+    wineWow64Packages.waylandFull
     distrobox
   ];
 
