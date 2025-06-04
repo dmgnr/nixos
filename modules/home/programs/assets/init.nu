@@ -58,5 +58,46 @@ $env.config.hooks.command_not_found = {
 	cd $dir
 }
 
+# Useful commands
+
+# Set hyprpaper wallpaper
+# 
+# Don't pass a path to use the default wallpaper
+def wallpaper [
+    path?: path,     # path to the wallpaper
+    --screen: string # screen to set the wallpaper for, defaults to all
+] {
+    if $path == null {
+        systemctl --user restart hyprpaper
+    } else if ($path | path exists) {
+        hyprctl hyprpaper preload $path
+        hyprctl hyprpaper wallpaper $"($screen),($path)"
+    } else {
+        echo $"Wallpaper path does not exist: ($path)"
+    }
+}
+
+# Rank most used commands from history
+def rank [
+    --last: int = 500 # number of last commands to consider, defaults to 500
+    --limit: int = 20 # number of commands to return, defaults to 20
+] {
+    history | last $last
+     | group-by { get command | split words | get -i 0 }
+     | transpose cmd list
+     | each {{ "command": $in.cmd, "count": ($in.list | length) }}
+     | sort-by count --reverse
+     | first $limit
+}
+
+# Useful commands transformed to nu format
+def --wrapped mount [...args] { 
+    if ($args | length) > 0 {
+        ^mount ...$args
+    } else {
+        ^mount | parse "{t} on {path} type {type} ({param})" | reject t
+    }
+}
+
 is
 if (($env.ISTERM? | default "0") != "1") { exit } else { clear }
