@@ -10,5 +10,6 @@
     ./micro.nix
     ./nix.nix
     ./zed.nix
+    ./cava.nix
   ];
 }
