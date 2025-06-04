@@ -190,7 +190,7 @@
       ", print, exec, hyprshot -m region --clipboard-only -z -s"
       "SHIFT, print, exec, hyprshot -m output -m active --clipboard-only -s"
     ];
-    windowrulev2 = [
+    windowrule = [
       # Ignore maximize requests from apps. You'll probably like this.
       "suppressevent maximize, class:.*"
       # Fix some dragging issues with XWayland
@@ -198,9 +198,14 @@
       # Keep picture in picture on all workspaces
       "float, title:^(Picture in picture)$"
       "pin, title:^(Picture in picture)$"
+      # Remove border when there's only 1 window
       "noborder, onworkspace:w[tv1] f[-1], floating:0"
-      "float, maximize, pin, class:^(waydroid\\.)(.+)$"
+      # Fix some issues with Waydroid
+      "float, maximize, pin, noblur, class:^(waydroid\\.)(.+)$"
+      # Fix buggy scaling in Wine
       "float, class:^(.+)\\.exe$"
+      # Fix context menu blur
+      "noblur,class:^()$,title:^()$"
     ];
 
     # Waybar blur
