@@ -21,4 +21,7 @@
 
   # Manually enabled in init.nu
   programs.pay-respects.enableNushellIntegration = false;
+
+  # Carapace
+  programs.carapace.enable = true;
 }
