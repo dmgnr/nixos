@@ -85,7 +85,7 @@ def rank [
     history | last $last
      | group-by { get command | split words | get -i 0 }
      | transpose cmd list
-     | each {{ "command": $in.cmd, "count": ($in.list | length) }}
+     | par-each {{ "command": $in.cmd, "count": ($in.list | length) }}
      | sort-by count --reverse
      | first $limit
 }
