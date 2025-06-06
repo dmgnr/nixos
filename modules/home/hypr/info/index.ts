@@ -53,7 +53,7 @@ async function getMemPercent() {
   const available =
     1024 *
     Number(
-      (await file("/proc/meminfo").text()).match(/MemAvailable:[ ]+(\d+)/),
+      (await file("/proc/meminfo").text()).match(/MemAvailable:[ ]+(\d+)/)
     );
   const used = 1 - available / totalmem();
   return { text: `${Math.round(used * 100)}% `, perc: used };
@@ -74,6 +74,26 @@ async function getNotification() {
   }
 }
 
+var beforeRecord = 0;
+async function getRecord() {
+  const isRecording = (await $`pidof wf-recorder`.nothrow()).exitCode === 0;
+  if (!isRecording) beforeRecord = Date.now();
+  const recordTime = (Date.now() - beforeRecord) / 1000;
+  if (recordTime < 1) return false;
+  const minutes = Math.floor(recordTime / 60)
+    .toString()
+    .padStart(2, "0");
+  const seconds = Math.floor(recordTime % 60)
+    .toString()
+    .padStart(2, "0");
+  return {
+    text: `󰑋 ${minutes}:${seconds}`,
+    alt: "recording",
+    tooltip: "Recording with wf-recorder",
+    class: "rec",
+  };
+}
+
 function smart() {
   var lastVolume: number | null = null;
   var lastNetwork: string | null = null;
@@ -88,6 +108,7 @@ function smart() {
       const cpu = getCpuPercent();
       const vol = await getVolume();
       const ntf = await getNotification();
+      const rec = await getRecord();
       if (lastVolume === null) lastVolume = vol.volume;
       if (vol.volume != lastVolume) volumeTimer = Date.now() + 3000;
       if (net.network && lastNetwork === null) lastNetwork = net.network;
@@ -117,8 +138,8 @@ function smart() {
             ? bat.percent < 15
               ? "critical"
               : bat.percent < 25
-                ? "warning"
-                : ""
+              ? "warning"
+              : ""
             : "");
       } else if (mem.perc > 0.85) {
         res.text = mem.text;
@@ -130,6 +151,8 @@ function smart() {
       } else if (cpu.perc > 70) {
         res.text = cpu.text;
         res.class = "cpu";
+      } else if (rec) {
+        res = { ...res, ...rec };
       } else if (vol.muted || vol.volume > 70) {
         res.text = vol.text;
         res.tooltip = "Volume: " + vol.volume + "%";
@@ -150,7 +173,7 @@ function smart() {
           tooltip: `${e}`,
           class: "err",
           percentage: 0,
-        }),
+        })
       );
     }
   }

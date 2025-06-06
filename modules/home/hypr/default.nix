@@ -26,6 +26,8 @@
     "$browser" = "thorium";
     "$qalc" =
       "pkill qalc; hyprctl dispatch exec \"[size 350 400; move 100%-350 100%-420; pin; float; stayfocused; dimaround; animation slide bottom]kitty qalc\"";
+    "$record" =
+      "bash -c 'pkill wf-recorder || (hyprctl notify 1 2000 0 \"Recording started\" && wf-recorder -f recording.mp4 -y -g \"$(slurp)\" && wl-copy -t video/mp4 < recording.mp4 && hyprctl notify 1 2000 0 \"Recording finished\")'";
 
     monitor = ",preferred,auto,auto";
 
@@ -189,6 +191,7 @@
       # Screenshot
       ", print, exec, hyprshot -m region --clipboard-only -z -s"
       "SHIFT, print, exec, hyprshot -m output -m active --clipboard-only -s"
+      "ALT, print, exec, $record"
     ];
     windowrule = [
       # Ignore maximize requests from apps. You'll probably like this.

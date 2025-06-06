@@ -32,5 +32,7 @@
     hyprpaper
     hyprpolkitagent
     hypridle
+    slurp
+    wf-recorder
   ];
 }

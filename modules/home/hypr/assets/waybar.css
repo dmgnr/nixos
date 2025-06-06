@@ -89,6 +89,10 @@ window#waybar {
   background-color: #f53c3c;
 }
 
+#custom-info.rec {
+  background-color: red;
+}
+
 #battery.warning:not(.charging), #custom-info.batwarning {
   color: white;
   animation-name: blink;
