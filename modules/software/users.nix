@@ -37,6 +37,26 @@
     extraGroups = [
       "networkmanager"
     ];
+    packages = with pkgs; [
+      kdePackages.kate
+      kdePackages.kdeconnect-kde
+      git
+      vesktop
+      fastfetch
+      nixd
+      nixfmt-rfc-style
+      element-desktop
+      gh
+      spotube
+      inshellisense
+      gearlever
+      appimage-run
+      nvtopPackages.full
+      scrcpy
+
+      godns
+      #  thunderbird
+    ];
   };
 
   security.sudo.wheelNeedsPassword = false;
