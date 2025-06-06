@@ -222,5 +222,7 @@
       "HYPRCURSOR_THEME,Bibata-Modern-Classic"
       "__NV_PRIME_RENDER_OFFLOAD,1"
     ];
+
+    "plugin.hyprwinwrap.class" = "bg";
   };
 }

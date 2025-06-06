@@ -10,5 +10,4 @@
   wayland.windowManager.hyprland.plugins = [
     pkgs.hyprlandPlugins.hyprwinwrap
   ];
-  wayland.windowManager.hyprland.settings.plugin.hyprwinwrap.class = "cava";
 }
