@@ -31,6 +31,13 @@
       #  thunderbird
     ];
   };
+  users.users.silas = {
+    isNormalUser = true;
+    description = "SupremeFlyGuy";
+    extraGroups = [
+      "networkmanager"
+    ];
+  };
 
   security.sudo.wheelNeedsPassword = false;
   security.pam.services.hyprlock = { };

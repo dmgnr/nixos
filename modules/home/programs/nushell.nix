@@ -10,10 +10,10 @@
     extraEnv = ''
       $env.PROMPT_COMMAND_RIGHT = ""
       $env.PROMPT_INDICATOR = " "
+      $env.SHELL = "nu"
     '';
     shellAliases = {
       a = "nix-alien";
-      rebuild = "nh os switch /etc/nixos -- --impure --accept-flake-config";
       frccode = "distrobox enter -n ubuntu -r -- bash /home/dgnr/wpilib/2025/frccode/frccode2025";
       profile = "system76-power profile";
     };

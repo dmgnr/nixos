@@ -109,5 +109,22 @@ def --wrapped git [...args] {
     }
 }
 
+# Wrapper around nix commands with some aliases
+def --wrapped nix [...args] {
+    if ($args | length) == 0 {
+        ^nix
+    } else if $args.0 == "switch" {
+        nh os switch /etc/nixos
+    } else if $args.0 == "shell" {
+        ^nix shell ...($args | each {
+            if ($in | str starts-with "-") or ($in | str contains "#") {
+                $in
+            } else $"nixpkgs#($in)"
+        } | skip 1)
+    } else {
+        ^nix ...$args
+    }
+}
+
 is
 if (($env.ISTERM? | default "0") != "1") { exit } else { clear }
