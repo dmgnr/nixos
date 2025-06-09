@@ -117,6 +117,12 @@ def --wrapped nix [...args] {
         nh os switch $env.NH_FLAKE ...($args | skip 1)
     } else if $args.0 == "clean" {
         nh clean user ...($args | skip 1)
+    } else if $args.0 == "repl" {
+        if ($args | length) == 1 {
+            ^nix repl $"($env.NH_FLAKE)#nixosConfigurations.(hostname)"
+        } else {
+            ^nix ...$args
+        }
     } else if $args.0 == "shell" {
         ^nix shell ...($args | each {
             if ($in | str starts-with "-") or ($in | str contains "#") {
