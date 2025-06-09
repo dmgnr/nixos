@@ -15,6 +15,6 @@
     hyprland.enable = false;
     hyprlock.useWallpaper = false;
     tofi.enable = false;
-    waybar.addCss = false;
+    waybar.enable = false;
   };
 }
