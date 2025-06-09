@@ -7,4 +7,6 @@
       priority = 1;
     }
   ];
+
+  hardware.ksm.enable = true;
 }
