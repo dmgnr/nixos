@@ -11,6 +11,7 @@
       $env.PROMPT_COMMAND_RIGHT = ""
       $env.PROMPT_INDICATOR = " "
       $env.SHELL = "nu"
+      $env.NH_FLAKE = "/etc/nixos"
     '';
     shellAliases = {
       a = "nix-alien";
