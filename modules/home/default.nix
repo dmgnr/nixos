@@ -53,7 +53,7 @@
     # set some aliases, feel free to add more or remove some
     shellAliases = {
       a = "nix-alien";
-      rebuild = "nh os switch /etc/nixos -- --impure --accept-flake-config";
+      rebuild = "nix switch";
       frccode = "distrobox enter -n ubuntu -r -- bash /home/dgnr/wpilib/2025/frccode/frccode2025";
     };
   };

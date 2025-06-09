@@ -21,7 +21,7 @@
     "$terminal" = "kitty nu";
     "$fileManager" = "dolphin";
     "$menud" = "tofi-drun";
-    "$menu" = "$(tofi-run --require-match=false)";
+    "$menu" = ''hyprctl dispatch exec "[float; size 100% 20px; move 0% 100%-43; pin; stayfocused; animation slide bottom; noborder]LAUNCHER=1 kitty --class launcher nu"'';
     "$util" = "bun ${./util/index.ts}";
     "$browser" = "thorium";
     "$qalc" =

@@ -114,7 +114,7 @@ def --wrapped nix [...args] {
     if ($args | length) == 0 {
         ^nix
     } else if $args.0 == "switch" {
-        nh os switch /etc/nixos
+        nh os switch $env.NH_FLAKE
     } else if $args.0 == "shell" {
         ^nix shell ...($args | each {
             if ($in | str starts-with "-") or ($in | str contains "#") {
@@ -126,5 +126,26 @@ def --wrapped nix [...args] {
     }
 }
 
-is
-if (($env.ISTERM? | default "0") != "1") { exit } else { clear }
+if $env.LAUNCHER == "1" {
+    $env.config.hooks.display_output = {
+        $env.config.hooks.display_output = {table}
+        clear
+        let output = ($in | table)
+        print $output
+        if ($env.CMD_DURATION_MS | into int) < 3000 {
+            hyprctl --batch -q "dispatch moveactive 0 -200;dispatch resizeactive 0 200"
+            sleep 0.2sec
+            print $output # Print it again because the resize won't show it
+            input listen -t ["key"]
+        }
+        exit
+    }
+} else {
+    # Initialize Inshellisense
+    is
+    if $env.ISTERM? != "1" {
+        exit
+    } else {
+        clear
+    }
+}
