@@ -114,7 +114,9 @@ def --wrapped nix [...args] {
     if ($args | length) == 0 {
         ^nix
     } else if $args.0 == "switch" {
-        nh os switch $env.NH_FLAKE
+        nh os switch $env.NH_FLAKE ...($args | skip 1)
+    } else if $args.0 == "clean" {
+        nh clean user ...($args | skip 1)
     } else if $args.0 == "shell" {
         ^nix shell ...($args | each {
             if ($in | str starts-with "-") or ($in | str contains "#") {
@@ -126,7 +128,7 @@ def --wrapped nix [...args] {
     }
 }
 
-if $env.LAUNCHER == "1" {
+if $env.LAUNCHER? == "1" {
     $env.config.hooks.display_output = {
         $env.config.hooks.display_output = {table}
         clear
