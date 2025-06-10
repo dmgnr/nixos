@@ -135,9 +135,13 @@ def --wrapped nix [...args] {
 }
 
 if $env.LAUNCHER? == "1" {
-    $env.config.hooks.pre_execution = {
-        hyprctl -q "dispatch resizeactive 0 200"
-    }
+    $env.config = (
+        $env.config
+        | upsert hooks.pre_execution [ {||
+            hyprctl -q "dispatch resizeactive 0 200"
+            sleep 0.2sec
+        } ]
+    )
     $env.config.hooks.display_output = {
         $env.config.hooks.display_output = {table}
         clear
@@ -145,7 +149,6 @@ if $env.LAUNCHER? == "1" {
         print $output
         if ($env.CMD_DURATION_MS | into int) < 3000 {
             hyprctl -q "dispatch moveactive 0 -200"
-            sleep 0.2sec
             print $output # Print it again because the resize won't show it
             input listen -t ["key"]
         }
