@@ -13,6 +13,7 @@
       $env.SHELL = "nu"
       $env.NH_FLAKE = "/etc/nixos"
       $env.TRANSIENT_PROMPT_COMMAND = " "
+      $env.CARAPACE_BRIDGES = "zsh,fish,bash,inshellisense"
     '';
     shellAliases = {
       a = "nix-alien";
