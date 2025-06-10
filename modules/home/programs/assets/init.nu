@@ -149,7 +149,6 @@ if $env.LAUNCHER? == "1" {
         print $output
         if ($env.CMD_DURATION_MS | into int) < 3000 {
             hyprctl -q "dispatch moveactive 0 -200"
-            print $output # Print it again because the resize won't show it
             input listen -t ["key"]
         }
         exit
