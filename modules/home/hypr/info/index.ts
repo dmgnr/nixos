@@ -128,6 +128,9 @@ async function update(timeout?: ShowType) {
   if (DEBUG) console.log("\u001bcData", JSON.stringify(data), "\nLast", last);
   if (!ready) return;
   const { bat, vol, cpu, ram, ntf, rec, net, mut, low } = data;
+
+  const volText = mut ? `` : `${vol}% ${vol < 20 ? "" : " "}`;
+
   if (timeout !== undefined) {
     // Temporary indicators
     if (overlap) clearTimeout(overlap);
@@ -140,7 +143,7 @@ async function update(timeout?: ShowType) {
         return show({ text: `${net} `, class: "net", tooltip: net });
       case ShowType.VOL:
         return show({
-          text: mut ? `` : `${vol}% ${vol < 20 ? "" : " "}`,
+          text: volText,
           class: "vol",
           tooltip: `Volume: ${vol}%`,
         });
@@ -187,7 +190,7 @@ async function update(timeout?: ShowType) {
     });
   } else if (mut || vol > 70)
     show({
-      text: `vol`,
+      text: volText,
       tooltip: mut ? "Volume muted" : `High volume(>70%)`,
       class: "vol",
     });
