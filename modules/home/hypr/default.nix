@@ -152,7 +152,7 @@
         "$mod, G, togglegroup," # Toggle group on active window
         "$mod, TAB, changegroupactive," # Move into group
         "$mod, C, exec, $qalc"
-        "$mod, H, exec, $wogglewb"
+        "$mod, H, exec, $togglewb"
         # ...additional keybindings from hyprland.conf...
       ]
       ++ (
