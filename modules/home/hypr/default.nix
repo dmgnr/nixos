@@ -28,6 +28,8 @@
       "pkill qalc; hyprctl dispatch exec \"[size 350 400; move 100%-350 100%-420; pin; float; stayfocused; dimaround; animation slide bottom]kitty qalc\"";
     "$record" =
       "bash -c 'pkill wf-recorder || (hyprctl notify 1 2000 0 \"Recording started\" && wf-recorder -f recording.mp4 -y -g \"$(slurp)\" && wl-copy -t video/mp4 < recording.mp4 && hyprctl notify 1 2000 0 \"Recording finished\")'";
+    "$togglewb" =
+      "pkill -SIGUSR1 waybar";
 
     monitor = ",preferred,auto,auto";
 
@@ -150,6 +152,7 @@
         "$mod, G, togglegroup," # Toggle group on active window
         "$mod, TAB, changegroupactive," # Move into group
         "$mod, C, exec, $qalc"
+        "$mod, H, exec, $wogglewb"
         # ...additional keybindings from hyprland.conf...
       ]
       ++ (
