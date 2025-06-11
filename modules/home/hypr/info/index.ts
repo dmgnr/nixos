@@ -99,7 +99,8 @@ async function getNetwork() {
   const out = await $`nmcli -g general.connection d show wlp2s0`.text();
   const network = out.trim();
   data.net = network || "";
-  update(ShowType.NET);
+  if (network) update(ShowType.NET);
+  else update();
 }
 
 async function getNotification() {
@@ -114,8 +115,10 @@ async function getRecord() {
   if (!isRecording || beforeRecord == 0) beforeRecord = Date.now();
   const recordTime = Math.round((Date.now() - beforeRecord) / 1000);
   if (recordTime < 1) {
-    if (data.rec > 1) update();
-    return (data.rec = -1);
+    const was = data.rec;
+    data.rec = -1;
+    if (was > 1) update();
+    return;
   } else data.rec = recordTime;
   update();
 }
@@ -139,36 +142,43 @@ async function update(timeout?: ShowType) {
         return show({
           text: mut ? `` : `${vol}% ${vol < 20 ? "" : " "}`,
           class: "vol",
+          tooltip: `Volume: ${vol}%`,
         });
       default:
         return;
     }
   } else if (overlap) return;
-  else if (cpu > 80) show({ text: `${cpu}% `, class: "cpu" });
+  else if (cpu > 80)
+    show({ text: `${cpu}% `, class: "cpu", tooltip: "High CPU usage(>80%)" });
   else if (low) {
     const icons = ["󰁻", "󰁼", "󰁾", "󰂀", "󰂂", "󰁹"];
     const icon = low ? icons[Math.floor(bat / 20)] : "󰁺";
     show({
       text: `${bat}% ${icon}`,
       class: "bat" + (bat < 15 ? "critical" : bat < 25 ? "warning" : ""),
-      tooltip: "Low battery",
+      tooltip: (bat < 15 ? "Critically l" : "L") + "ow battery",
     });
-  } else if (ram > 80) show({ text: `${ram}% `, class: "mem" });
-  else if (!net) show({ text: "", class: "net", tooltip: "Disconnected" });
+  } else if (ram > 80)
+    show({
+      text: `${ram}% `,
+      class: "mem",
+      tooltip: "High Memory usage(>80%)",
+    });
+  else if (!net) show({ text: "󰖪", class: "net", tooltip: "Disconnected" });
   else if (rec > 0) {
-    if (rec < 5)
-      return show({
-        text: `󰑋`,
-        alt: "recording",
-        tooltip: "Recording with wf-recorder",
-        class: "rec",
-      });
     const minutes = Math.floor(rec / 60)
       .toString()
       .padStart(2, "0");
     const seconds = Math.floor(rec % 60)
       .toString()
       .padStart(2, "0");
+    if (rec < 5)
+      return show({
+        text: `󰑋`,
+        alt: "recording",
+        tooltip: `Recording with wf-recorder (${minutes}:${seconds})`,
+        class: "rec",
+      });
     show({
       text: `󰑋 ${minutes}:${seconds}`,
       alt: "recording",
@@ -178,12 +188,17 @@ async function update(timeout?: ShowType) {
   } else if (mut || vol > 70)
     show({
       text: `vol`,
-      tooltip: `Volume: ${vol}%`,
+      tooltip: mut ? "Volume muted" : `High volume(>70%)`,
       class: "vol",
     });
   else
     show({
       text: (ntf ? ntf + " " : "") + "",
+      tooltip: DEBUG
+        ? "Debug mode"
+        : Object.keys(data)
+            .map((e) => e + ": " + JSON.stringify(data[e as keyof typeof data]))
+            .join("\n"),
       class: "ntf",
     });
 }
@@ -201,7 +216,7 @@ function show(data: Data) {
 type Data = {
   text: string;
   alt?: string;
-  tooltip?: string;
+  tooltip: string;
   class: string;
   percentge?: number;
 };
@@ -224,10 +239,11 @@ async function init() {
   // Scheduled + initialization
   scheduler(1000, getCpuPercent, getBatPercent, getMemPercent, getRecord);
   // Unlock the update function
-  if(!DEBUG) setTimeout(() => {
-    ready = true;
-    update();
-  }, 1000);
+  if (!DEBUG)
+    setTimeout(() => {
+      ready = true;
+      update();
+    }, 1000);
 }
 
 function scheduler(interval: number, ...fn: Function[]) {
