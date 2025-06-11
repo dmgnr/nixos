@@ -56,7 +56,7 @@ async function getVolume() {
   const out = await $`wpctl get-volume @DEFAULT_AUDIO_SINK@`.text();
   const [, vol, muted] =
     out.match(/^Volume: ([0-9]+(?:\.[0-9]+))?( \[MUTED\])?$/m) ?? [];
-  const volume = muted ? 0 : parseFloat(vol ?? "0") * 100;
+  const volume = Math.round(muted ? 0 : parseFloat(vol ?? "0") * 100);
   if (volume == data.vol && !!muted == data.mut) return;
   data.vol = volume;
   data.mut = !!muted;
