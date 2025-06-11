@@ -1,5 +1,41 @@
-import { file, $ } from "bun";
+import { file, $, type ErrorLike } from "bun";
 import { cpus, totalmem } from "os";
+import { systemBus } from "dbus-ts";
+import type { Interfaces as NetworkManager } from "@dbus-types/networkmanager";
+import { spawn } from "child_process";
+const bus = await systemBus<NetworkManager>();
+var ready = false;
+
+const DEBUG = process.argv.includes("--debug");
+
+console.log(
+  JSON.stringify({
+    text: "",
+    alt: "",
+    tooltip: "",
+    class: "",
+    percentage: 0,
+  })
+);
+
+const data = {
+  bat: -1, // Battery
+  vol: -1, // Volume
+  cpu: -1, // CPU
+  ram: -1, // Memory
+  ntf: -1, // Notifications
+  rec: -1, // Record
+  net: "", // Network
+  mut: false, // Muted
+  low: false, // Low battery
+};
+
+const nmbus = await bus.getInterface(
+  "org.freedesktop.NetworkManager",
+  "/org/freedesktop/NetworkManager",
+  "org.freedesktop.NetworkManager"
+);
+
 async function getBatPercent() {
   const [nowStr, fullStr, status] = await Promise.all([
     file("/sys/class/power_supply/BAT0/energy_now").text(),
@@ -8,28 +44,23 @@ async function getBatPercent() {
   ]);
   const now = parseInt(nowStr.trim());
   const full = parseInt(fullStr.trim());
-  const icons = ["󰁻", "󰁼", "󰁾", "󰂀", "󰂂", "󰁹"];
   const percent = Math.round((now / full) * 100);
   const low = percent < 40 && status.includes("Discharging");
-  const icon = low ? icons[Math.floor(percent / 20)] : "󰁺";
-  return {
-    text: `${percent}% ${icon}`,
-    low,
-    percent,
-    discharging: status.includes("Discharging"),
-  };
+  if (low == data.low && percent == data.bat) return;
+  data.bat = percent;
+  data.low = low;
+  update();
 }
 
 async function getVolume() {
   const out = await $`wpctl get-volume @DEFAULT_AUDIO_SINK@`.text();
   const [, vol, muted] =
     out.match(/^Volume: ([0-9]+(?:\.[0-9]+))?( \[MUTED\])?$/m) ?? [];
-  const volume = parseFloat(vol ?? "0") * 100;
-  return {
-    text: muted ? "" : `${Math.round(volume)}% ${volume < 5 ? "" : " "}`,
-    volume,
-    muted: !!muted,
-  };
+  const volume = muted ? 0 : parseFloat(vol ?? "0") * 100;
+  if (volume == data.vol && !!muted == data.mut) return;
+  data.vol = volume;
+  data.mut = !!muted;
+  update(ShowType.VOL);
 }
 
 var previousTotal: number[] = [],
@@ -45,56 +76,51 @@ function getCpuPercent() {
     previousIdle[i] = idle;
     return totalDelta > 0 ? ((totalDelta - idleDelta) / totalDelta) * 100 : 0;
   });
-  const perc = percents.reduce((a, b) => a + b, 0) / percents.length;
-  return { text: `${Math.round(perc)}% `, perc };
+  const perc = Math.round(
+    percents.reduce((a, b) => a + b, 0) / percents.length
+  );
+  if (data.cpu > 80) {
+    data.cpu = perc;
+    update();
+  } else data.cpu = perc;
 }
 
 async function getMemPercent() {
   const available =
     1024 *
     Number(
-      (await file("/proc/meminfo").text()).match(/MemAvailable:[ ]+(\d+)/)
+      (await file("/proc/meminfo").text()).match(/MemAvailable: +(\d+)/)?.[1]
     );
-  const used = 1 - available / totalmem();
-  return { text: `${Math.round(used * 100)}% `, perc: used };
+  const used = Math.round((1 - available / totalmem()) * 100);
+  data.ram = used;
 }
 
 async function getNetwork() {
   const out = await $`nmcli -g general.connection d show wlp2s0`.text();
   const network = out.trim();
-  if (!network) return { format: "", class: "disconnected" };
-  return { format: "", tooltip: network, class: "net", network };
+  data.net = network || "";
+  update(ShowType.NET);
 }
 
 async function getNotification() {
-  try {
-    return await $`swaync-client -c`.json();
-  } catch {
-    return null;
-  }
+  data.ntf = await $`swaync-client -c`.json();
+  update();
 }
 
 var beforeRecord = 0;
 async function getRecord() {
-  const isRecording = (await $`pidof wf-recorder`.nothrow()).exitCode === 0;
-  if (!isRecording) beforeRecord = Date.now();
-  const recordTime = (Date.now() - beforeRecord) / 1000;
-  if (recordTime < 1) return false;
-  const minutes = Math.floor(recordTime / 60)
-    .toString()
-    .padStart(2, "0");
-  const seconds = Math.floor(recordTime % 60)
-    .toString()
-    .padStart(2, "0");
-  return {
-    text: `󰑋 ${minutes}:${seconds}`,
-    alt: "recording",
-    tooltip: "Recording with wf-recorder",
-    class: "rec",
-  };
+  const isRecording =
+    (await $`pidof wf-recorder`.nothrow().quiet()).exitCode === 0;
+  if (!isRecording || beforeRecord == 0) beforeRecord = Date.now();
+  const recordTime = Math.round((Date.now() - beforeRecord) / 1000);
+  if (recordTime < 1) {
+    if (data.rec > 1) update();
+    return (data.rec = -1);
+  } else data.rec = recordTime;
+  update();
 }
 
-function smart() {
+/*function smart() {
   var lastVolume: number | null = null;
   var lastNetwork: string | null = null;
   var volumeTimer = 0,
@@ -177,21 +203,136 @@ function smart() {
       );
     }
   }
-
-  setInterval(run, 1000);
   run();
+}*/
+
+var overlap: Timer | null = null;
+async function update(timeout?: ShowType) {
+  if (DEBUG) console.log("\u001bcData", JSON.stringify(data), "\nLast", last);
+  if (!ready) return;
+  const { bat, vol, cpu, ram, ntf, rec, net, mut, low } = data;
+  if (timeout !== undefined) {
+    // Temporary indicators
+    if (overlap) clearTimeout(overlap);
+    overlap = setTimeout(() => {
+      overlap = null;
+      update();
+    }, 5000);
+    switch (timeout) {
+      case ShowType.NET:
+        return show({ text: `${net} `, class: "net", tooltip: net });
+      case ShowType.VOL:
+        return show({
+          text: mut ? `` : `${vol}% ${vol < 20 ? "" : " "}`,
+          class: "vol",
+        });
+      default:
+        return;
+    }
+  } else if (overlap) return;
+  else if (cpu > 80) show({ text: `${cpu}% `, class: "cpu" });
+  else if (low) {
+    const icons = ["󰁻", "󰁼", "󰁾", "󰂀", "󰂂", "󰁹"];
+    const icon = low ? icons[Math.floor(bat / 20)] : "󰁺";
+    show({
+      text: `${bat}% ${icon}`,
+      class: "bat" + (bat < 15 ? "critical" : bat < 25 ? "warning" : ""),
+      tooltip: "Low battery",
+    });
+  } else if (ram > 80) show({ text: `${ram}% `, class: "mem" });
+  else if (!net) show({ text: "", class: "net", tooltip: "Disconnected" });
+  else if (rec > 0) {
+    if (rec < 5)
+      return show({
+        text: `󰑋`,
+        alt: "recording",
+        tooltip: "Recording with wf-recorder",
+        class: "rec",
+      });
+    const minutes = Math.floor(rec / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = Math.floor(rec % 60)
+      .toString()
+      .padStart(2, "0");
+    show({
+      text: `󰑋 ${minutes}:${seconds}`,
+      alt: "recording",
+      tooltip: "Recording with wf-recorder",
+      class: "rec",
+    });
+  } else if (mut || vol > 70)
+    show({
+      text: `vol`,
+      tooltip: `Volume: ${vol}%`,
+      class: "vol",
+    });
+  else
+    show({
+      text: (ntf ? ntf + " " : "") + "",
+      class: "ntf",
+    });
 }
-switch (process.argv[3]) {
-  case "mpris":
-    // to be implemented
-    break;
-  default:
-  case "smart":
-    smart();
+
+var last: string = "";
+function show(data: Data) {
+  try {
+    const out = JSON.stringify(data);
+    if (out == last) return;
+    last = out;
+    if (DEBUG) console.log("Now ", out);
+    else console.log(out);
+  } catch {}
 }
-type Module = () =>
-  | Promise<
-      { text: string; alt?: string; tooltip: string; class: string } | false
-    >
-  | { text: string; alt?: string; tooltip: string; class: string }
-  | false;
+type Data = {
+  text: string;
+  alt?: string;
+  tooltip?: string;
+  class: string;
+  percentge?: number;
+};
+enum ShowType {
+  NET,
+  VOL,
+}
+
+async function init() {
+  // Initialization
+  getVolume();
+  getNetwork();
+  // Listening
+  spawn("swaync-client", ["-s"]).stdout.on("data", getNotification);
+  spawn("pw-cli").stdout.on("data", (dat) => {
+    const msg: string = dat.toString();
+    if (msg.match(/node \d+ changed/)) getVolume();
+  });
+  nmbus.on("StateChanged", getNetwork);
+  // Scheduled + initialization
+  scheduler(1000, getCpuPercent, getBatPercent, getMemPercent, getRecord);
+  // Unlock the update function
+  if(!DEBUG) setTimeout(() => {
+    ready = true;
+    update();
+  }, 1000);
+}
+
+function scheduler(interval: number, ...fn: Function[]) {
+  fn.forEach((f) => f());
+  setTimeout(() => scheduler(interval, ...fn), interval);
+}
+
+init();
+
+function errorHandler(err: ErrorLike) {
+  show({
+    text: "",
+    alt: "err",
+    tooltip: `${err}`,
+    class: "err",
+  });
+}
+if (!DEBUG) {
+  process.addListener("uncaughtException", errorHandler);
+  // @ts-ignore
+  process.addListener("unhandledRejection", errorHandler);
+}

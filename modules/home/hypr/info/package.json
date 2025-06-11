@@ -8,5 +8,9 @@
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@dbus-types/networkmanager": "^0.0.5",
+    "dbus-ts": "^0.0.7"
   }
 }
