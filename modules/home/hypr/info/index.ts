@@ -6,11 +6,12 @@ import { spawn } from "child_process";
 const bus = await systemBus<NetworkManager>();
 var ready = false;
 
+const loading = ["󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"];
 const DEBUG = process.argv.includes("--debug");
 
 console.log(
   JSON.stringify({
-    text: "",
+    text: "",
     alt: "",
     tooltip: "",
     class: "",
@@ -123,9 +124,10 @@ async function getRecord() {
 }
 
 var overlay: Timer | null = null;
+var tick: (value?: unknown) => void = () => {};
 async function update(timeout?: ShowType) {
   if (DEBUG) console.log("\u001bcData", JSON.stringify(data), "\nLast", last);
-  if (!ready) return;
+  if (!ready) return tick();
   const { bat, vol, cpu, ram, ntf, rec, net, mut, low } = data;
 
   const volText = mut ? `` : `${vol}% ${vol < 20 ? "" : " "}`;
@@ -228,9 +230,6 @@ enum ShowType {
 }
 
 async function init() {
-  // Initialization
-  getVolume();
-  getNetwork();
   // Listening
   spawn("swaync-client", ["-s"]).stdout.on("data", getNotification);
   spawn("pw-cli").stdout.on("data", (dat) => {
@@ -240,15 +239,28 @@ async function init() {
   nmbus.on("StateChanged", getNetwork);
   // Scheduled + initialization
   scheduler(1000, getCpuPercent, getBatPercent, getMemPercent, getRecord);
+  // Initialization
+  getVolume();
+  getNetwork();
+
   // Unlock the update function
-  if (!DEBUG)
-    setTimeout(() => {
-      ready = true;
-      update();
-    }, 1000);
+  if (!DEBUG) {
+    for (let i = 0; i < loading.length; i++) {
+      show({ text: loading[i]!, class: "", tooltip: "Loading " + i });
+      await new Promise((r) => {
+        const timer = setTimeout(r, 100);
+        tick = () => {
+          r(null);
+          clearTimeout(timer);
+        };
+      });
+    }
+    ready = true;
+    update();
+  } else ready = true;
 }
 
-function scheduler(interval: number, ...fn: Function[]) {
+async function scheduler(interval: number, ...fn: Function[]) {
   fn.forEach((f) => f());
   setTimeout(() => scheduler(interval, ...fn), interval);
 }
