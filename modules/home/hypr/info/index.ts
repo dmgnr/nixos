@@ -79,10 +79,8 @@ function getCpuPercent() {
   const perc = Math.round(
     percents.reduce((a, b) => a + b, 0) / percents.length
   );
-  if (data.cpu > 80) {
-    data.cpu = perc;
-    update();
-  } else data.cpu = perc;
+  if (data.cpu > 80) setImmediate(update);
+  data.cpu = perc;
 }
 
 async function getMemPercent() {
@@ -92,6 +90,7 @@ async function getMemPercent() {
       (await file("/proc/meminfo").text()).match(/MemAvailable: +(\d+)/)?.[1]
     );
   const used = Math.round((1 - available / totalmem()) * 100);
+  if (data.ram > 80) setImmediate(update);
   data.ram = used;
 }
 
@@ -123,7 +122,7 @@ async function getRecord() {
   update();
 }
 
-var overlap: Timer | null = null;
+var overlay: Timer | null = null;
 async function update(timeout?: ShowType) {
   if (DEBUG) console.log("\u001bcData", JSON.stringify(data), "\nLast", last);
   if (!ready) return;
@@ -133,9 +132,9 @@ async function update(timeout?: ShowType) {
 
   if (timeout !== undefined) {
     // Temporary indicators
-    if (overlap) clearTimeout(overlap);
-    overlap = setTimeout(() => {
-      overlap = null;
+    if (overlay) clearTimeout(overlay);
+    overlay = setTimeout(() => {
+      overlay = null;
       update();
     }, 5000);
     switch (timeout) {
@@ -150,7 +149,7 @@ async function update(timeout?: ShowType) {
       default:
         return;
     }
-  } else if (overlap) return;
+  } else if (overlay) return;
   else if (cpu > 80)
     show({ text: `${cpu}% `, class: "cpu", tooltip: "High CPU usage(>80%)" });
   else if (low) {
