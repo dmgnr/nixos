@@ -4,6 +4,8 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.wireless.iwd.enable = true;
+  networking.networkmanager.wifi.backend = "iwd";
 
   # Networking
   services.tailscale.enable = true;
