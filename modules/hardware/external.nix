@@ -11,4 +11,7 @@
   # Location service
   location.provider = "geoclue2";
   services.geoclue2.enable = true;
+  
+  # USB Automounting
+  services.gvfs.enable = true;
 }
