@@ -96,7 +96,7 @@ async function getMemPercent() {
 }
 
 async function getNetwork() {
-  const out = await $`nmcli -g general.connection d show wlan0`.text();
+  const out = await $`nmcli -g general.connection d show wlp2s0`.text();
   const network = out.trim();
   data.net = network || "";
   if (network) update(ShowType.NET);
