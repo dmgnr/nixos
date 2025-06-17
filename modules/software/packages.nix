@@ -24,7 +24,6 @@
     bibata-cursors
     adwaita-qt
     adwaita-qt6
-    xdg-desktop-portal-gtk
     libsecret
     libqalculate
     spotify
@@ -69,15 +68,22 @@
       "inode/directory" = "yazi.desktop";
     };
   };
-  xdg.portal.config = {
-    hyprland = {
-      default = [
-        "hyprland"
-        "gtk"
-      ];
-      "org.freedesktop.impl.portal.Secret" = [
-        "gnome-keyring"
-      ];
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk
+    ];
+    config = {
+      hyprland = {
+        default = [
+          "hyprland"
+          "gtk"
+        ];
+        "org.freedesktop.impl.portal.Secret" = [
+          "gnome-keyring"
+        ];
+      };
     };
   };
 }
