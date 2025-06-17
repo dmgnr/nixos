@@ -34,5 +34,6 @@
     hypridle
     slurp
     wf-recorder
+    kdePackages.xwaylandvideobridge
   ];
 }
