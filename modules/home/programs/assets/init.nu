@@ -103,7 +103,7 @@ def --wrapped git [...args] {
     if ($args | length) == 0 {
         ^git
     } else if $args.0 == "log" {
-        return (git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD ...($args | skip 1) | lines | split column "»¦«" commit subject name email date | upsert date {|d| $d.date | into datetime})
+        return (^git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD ...($args | skip 1) | lines | split column "»¦«" commit subject name email date | upsert date {|d| $d.date | into datetime})
     } else {
         ^git ...$args
     }
