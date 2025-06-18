@@ -109,6 +109,14 @@ def --wrapped git [...args] {
     }
 }
 
+def pkyify [] {
+    each {
+        if ($in | str starts-with "-") or ($in | str contains "#") {
+            $in
+        } else $"nixpkgs#($in)"
+    }
+}
+
 # Wrapper around nix commands with some aliases
 def --wrapped nix [...args] {
     if ($args | length) == 0 {
@@ -123,12 +131,10 @@ def --wrapped nix [...args] {
         } else {
             ^nix ...$args
         }
+    } else if $args.0 == "run" {
+        ^nix run ...($args | skip 1 | pkgify)
     } else if $args.0 == "shell" {
-        ^nix shell ...($args | each {
-            if ($in | str starts-with "-") or ($in | str contains "#") {
-                $in
-            } else $"nixpkgs#($in)"
-        } | skip 1)
+        ^nix shell ...($args | skip 1 | pkgify)
     } else {
         ^nix ...$args
     }
