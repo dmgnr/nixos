@@ -109,7 +109,7 @@ def --wrapped git [...args] {
     }
 }
 
-def pkyify [] {
+def pkgify [] {
     each {
         if ($in | str starts-with "-") or ($in | str contains "#") {
             $in
