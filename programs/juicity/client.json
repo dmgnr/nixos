@@ -1,0 +1,10 @@
+{
+    "listen": ":1080",
+    "server": "m.dgnr.us:587",
+    "uuid": "00000000-0000-0000-0000-000000000000",
+    "password": "verysecure123",
+    "sni": "m.dgnr.us",
+    "allow_insecure": true,
+    "congestion_control": "bbr",
+    "log_level": "info"
+}

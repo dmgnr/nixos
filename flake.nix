@@ -108,6 +108,9 @@
             # Steam
             ./programs/steam
 
+            # Proxy
+            ./programs/juicity/client.nix
+
             home-manager.nixosModules.home-manager
             {
               home-manager.users.dgnr = import ./modules/home;

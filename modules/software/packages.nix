@@ -27,6 +27,7 @@
     libsecret
     libqalculate
     spotify
+    davinci-resolve
   ];
 
   services.flatpak = {
