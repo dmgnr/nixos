@@ -164,7 +164,7 @@ if $env.LAUNCHER? == "1" {
     is
     if $env.ISTERM? != "1" {
         exit
-    } else {
+    } else if not ("IN_NIX_SHELL" in $env) {
         clear
     }
 }
