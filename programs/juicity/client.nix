@@ -1,6 +1,10 @@
 { pkgs, ... }:
 {
-  networking.proxy.default = "http://localhost:1080";
+  networking.proxy = {
+    default = "socks5://localhost:1080";
+    httpProxy = "http://localhost:1080";
+    httpsProxy = "http://localhost:1080";
+  };
   environment.systemPackages = [ pkgs.juicity ];
   systemd.services.juicity = {
     enable = true;
