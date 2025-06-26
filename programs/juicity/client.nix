@@ -8,6 +8,8 @@
       "network.target"
       "nss-lookup.target"
     ];
+    wantedBy = [ "multi-user.target" ];
+
     serviceConfig = {
       DynamicUser = "yes";
       Type = "simple";
