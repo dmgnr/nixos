@@ -36,7 +36,7 @@
     };
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-    
+
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -59,78 +59,81 @@
     }:
     {
       # replace 'nyx' with your hostname here.
-      nixosConfigurations = nixpkgs.lib.genAttrs [ "nyx" "nixos" ] (
-        hostname:
-        nixpkgs.lib.nixosSystem rec {
-          system = "x86_64-linux";
-          specialArgs = { inherit self system winapps; };
-          modules = [
-            stylix.nixosModules.stylix
-            ./configuration.nix
-            ./modules
+      nixosConfigurations =
+        let
+          settings = import ./settings/general.nix;
+        in
+        nixpkgs.lib.genAttrs [ settings.hostname "nixos" ] (
+          hostname:
+          nixpkgs.lib.nixosSystem rec {
+            system = "x86_64-linux";
+            specialArgs = { inherit self system winapps; };
+            modules = [
+              stylix.nixosModules.stylix
+              ./configuration.nix
+              ./modules
 
-            # comma & nix-index
-            nix-index-database.nixosModules.nix-index
-            { programs.nix-index-database.comma.enable = true; }
+              # comma & nix-index
+              nix-index-database.nixosModules.nix-index
+              { programs.nix-index-database.comma.enable = true; }
 
-            # Add WPILib packages
-            (
-              { ... }:
+              # Add WPILib packages
+              (
+                { ... }:
+                {
+                  environment.systemPackages = [
+                    wpilib.packages.${system}.glass
+                    wpilib.packages.${system}.advantagescope
+                    wpilib.packages.${system}.vscode-wpilib
+                    wpilib.packages.${system}.sysid
+                    thorium.packages.${system}.default
+                  ];
+                }
+              )
+
+              # nix-alien
+              (
+                { self, pkgs, ... }:
+                {
+                  nixpkgs.overlays = [
+                    self.inputs.nix-alien.overlays.default
+                  ];
+                  environment.systemPackages = with pkgs; [
+                    nix-alien
+                  ];
+                  # Optional, needed for `nix-alien-ld`
+                  programs.nix-ld.enable = true;
+                }
+              )
+
+              # GoDNS systemd service
+              ./programs/godns/service.nix
+
+              # Steam
+              ./programs/steam
+
+              # Proxy
+              ./programs/juicity/client.nix
+
+              home-manager.nixosModules.home-manager
               {
-                environment.systemPackages = [
-                  wpilib.packages.${system}.glass
-                  wpilib.packages.${system}.advantagescope
-                  wpilib.packages.${system}.vscode-wpilib
-                  wpilib.packages.${system}.sysid
-                  thorium.packages.${system}.default
-                ];
+                home-manager.users = nixpkgs.lib.genAttrs settings.users import ./modules/home;
+                home-manager.backupFileExtension = "bak";
+
+                # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
               }
-            )
 
-            # nix-alien
-            (
-              { self, pkgs, ... }:
-              {
-                nixpkgs.overlays = [
-                  self.inputs.nix-alien.overlays.default
-                ];
-                environment.systemPackages = with pkgs; [
-                  nix-alien
-                ];
-                # Optional, needed for `nix-alien-ld`
-                programs.nix-ld.enable = true;
-              }
-            )
+              # Lanzaboote
+              lanzaboote.nixosModules.lanzaboote
 
-            # GoDNS systemd service
-            ./programs/godns/service.nix
+              # Lix
+              lix.nixosModules.default
 
-            # Steam
-            ./programs/steam
-
-            # Proxy
-            ./programs/juicity/client.nix
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.users.dgnr = import ./modules/home;
-              home-manager.users.silas = import ./modules/home;
-              home-manager.backupFileExtension = "bak";
-
-              # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
-            }
-
-            # Lanzaboote
-            lanzaboote.nixosModules.lanzaboote
-
-            # Lix
-            lix.nixosModules.default
-
-            # Flatpak
-            nix-flatpak.nixosModules.nix-flatpak
-          ];
-        }
-      );
+              # Flatpak
+              nix-flatpak.nixosModules.nix-flatpak
+            ];
+          }
+        );
       checks = nixpkgs.lib.genAttrs [ "x86_64-linux" ] (
         system:
         let

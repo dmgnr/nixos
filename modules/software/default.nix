@@ -5,7 +5,7 @@
     ./network.nix
     ./packages.nix
     ./system.nix
-    ./users.nix
+    ../../settings/users.nix
     ./virt.nix
     ./theme.nix
     ./services.nix
