@@ -117,7 +117,7 @@
 
               home-manager.nixosModules.home-manager
               {
-                home-manager.users = nixpkgs.lib.genAttrs settings.users import ./modules/home;
+                home-manager.users = (nixpkgs.lib.genAttrs settings.users (user: import ./modules/home));
                 home-manager.backupFileExtension = "bak";
 
                 # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
