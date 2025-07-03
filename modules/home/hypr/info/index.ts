@@ -222,7 +222,7 @@ type Data = {
   alt?: string;
   tooltip: string;
   class: string;
-  percentge?: number;
+  percentage?: number;
 };
 enum ShowType {
   NET,
