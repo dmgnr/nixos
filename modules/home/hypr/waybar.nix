@@ -134,7 +134,7 @@
         on-click = "hyprctl dispatch exec \"[size 380 400; move 100%-400 100%-418; ${ctl_opts} slide bottom]pavucontrol\"";
       };
       "custom/info" = {
-        exec = "bun ${./info/index.ts}";
+        exec = "bun ${./info}/index.ts";
         restart-interval = 5;
         return-type = "json";
         on-click = "swaync-client -t";
