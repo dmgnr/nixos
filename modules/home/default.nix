@@ -10,6 +10,7 @@
     enable = true;
     userName = "dreamgineer";
     userEmail = "me@dgnr.us";
+    delta.enable = true;
   };
 
   programs.bash = {
