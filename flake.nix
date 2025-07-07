@@ -8,6 +8,10 @@
 
     wpilib.url = "github:frc4451/frc-nix";
     thorium.url = "github:dreamgineer/nix-thorium";
+    scope = {
+      url = "github:dreamgineer/scope";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-alien.url = "github:thiagokokada/nix-alien";
 
     home-manager = {
@@ -55,6 +59,7 @@
       lanzaboote,
       nix-flatpak,
       stylix,
+      scope,
       ...
     }:
     {
@@ -77,7 +82,7 @@
               nix-index-database.nixosModules.nix-index
               { programs.nix-index-database.comma.enable = true; }
 
-              # Add WPILib packages
+              # Add WPILib & other flakes packages
               (
                 { ... }:
                 {
@@ -87,6 +92,7 @@
                     wpilib.packages.${system}.vscode-wpilib
                     wpilib.packages.${system}.sysid
                     thorium.packages.${system}.default
+                    scope.packages.${system}.default
                   ];
                 }
               )
