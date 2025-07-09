@@ -1,3 +1,4 @@
+{ lib, ... }:
 {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -21,8 +22,9 @@
   hardware.system76.power-daemon.enable = true;
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  time.timeZone = lib.mkDefault "Asia/Bangkok";
   services.timesyncd.fallbackServers = [ "cdga-dc1.canandaiguaschools.org" ];
+  services.automatic-timezoned.enable = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
