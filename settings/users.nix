@@ -6,6 +6,7 @@
     description = "Dreamgineer";
     extraGroups = [
       "networkmanager"
+      "plugdev"
       "wheel"
       "docker"
     ];

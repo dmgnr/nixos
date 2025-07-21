@@ -9,7 +9,7 @@
     wpilib.url = "github:frc4451/frc-nix";
     thorium.url = "github:dreamgineer/nix-thorium";
     scope = {
-      url = "github:dreamgineer/scope";
+      url = "github:dreamgineer/scope/dev";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-alien.url = "github:thiagokokada/nix-alien";
@@ -119,7 +119,7 @@
               ./programs/steam
 
               # Proxy
-              ./programs/juicity/client.nix
+              # ./programs/juicity/client.nix
 
               home-manager.nixosModules.home-manager
               {

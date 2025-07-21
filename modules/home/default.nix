@@ -11,6 +11,10 @@
     userName = "dreamgineer";
     userEmail = "me@dgnr.us";
     delta.enable = true;
+    hooks = rec {
+      post-commit = ./programs/assets/rebuild_hook.sh;
+      update = post-commit;
+    };
   };
 
   programs.bash = {
