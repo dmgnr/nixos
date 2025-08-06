@@ -735,11 +735,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1753111192,
-        "narHash": "sha256-uiznV+z9gz9uIdFrhVzXVgok/9BgPJkgZzTgGjhxJ+w=",
+        "lastModified": 1754501863,
+        "narHash": "sha256-f6YioZQkRnuoxTA86FoucLYKMTZhA933WHnlFsD64ls=",
         "owner": "dreamgineer",
         "repo": "scope",
-        "rev": "fab6c8208209709773cc29cc401bfc38dfdb9d86",
+        "rev": "9ffa990b8de504bafcedc92c0c3ee155c94c256e",
         "type": "github"
       },
       "original": {

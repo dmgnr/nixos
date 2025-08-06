@@ -28,6 +28,10 @@
     libqalculate
     spotify
     blender
+    
+    arduino-ide
+    python312Full
+    astyle
   ];
 
   services.flatpak = {

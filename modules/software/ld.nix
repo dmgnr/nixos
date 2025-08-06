@@ -11,6 +11,12 @@
     libraries = with pkgs; [
       stdenv.cc.cc.lib
       zlib
+      xorg.libX11.out
+      xorg.libXext.out
+      xorg.libXi.out
+      xorg.libXrender.out
+      xorg.libXtst.out
+      libGL
     ];
   };
 
