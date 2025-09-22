@@ -1,6 +1,7 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    # nixpkgs.url = "github:NixOS/nixpkgs?rev=9807714d6944a957c2e036f84b0ff8caf9930bc0";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # nix-index stuff
     nix-index-database.url = "github:nix-community/nix-index-database";

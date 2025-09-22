@@ -37,4 +37,14 @@
       workstation = true;
     };
   };
+
+  services.openvpn.servers = {
+    default = {
+      config = ''config /etc/nixos/settings/profile.ovpn '';
+      autoStart = true;
+    };
+  };
+
+  services.xrdp.enable = true;
+  services.xrdp.defaultWindowManager = "hyprland";
 }

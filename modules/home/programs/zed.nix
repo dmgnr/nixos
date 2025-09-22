@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 {
   programs.zed-editor = {
-    enable = true;
+    enable = false;
     extensions = [
       "nix"
       "java"

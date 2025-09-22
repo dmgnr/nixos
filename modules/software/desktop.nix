@@ -7,6 +7,7 @@
 
   # Enable the SDDM display manager.
   services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.package = pkgs.kdePackages.sddm;
   services.displayManager.sddm.theme = "sddm-astronaut-theme";
   services.displayManager.sddm.wayland.compositor = "kwin";
   services.displayManager.sddm.wayland.enable = true;

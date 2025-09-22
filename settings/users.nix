@@ -9,6 +9,7 @@
       "plugdev"
       "wheel"
       "docker"
+      "kvm"
     ];
     packages = with pkgs; [
       kdePackages.kate
@@ -21,12 +22,14 @@
       element-desktop
       blackbox-terminal
       gh
-      spotube
       inshellisense
       gearlever
       appimage-run
       nvtopPackages.full
       scrcpy
+      biome
+      platformio-core
+      discord
 
       godns
       #  thunderbird

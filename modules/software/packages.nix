@@ -28,9 +28,11 @@
     libqalculate
     spotify
     blender
+    unzip
+    wf-recorder
     
     arduino-ide
-    python312Full
+    python3
     astyle
   ];
 
