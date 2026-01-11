@@ -41,6 +41,6 @@
 
   nix.settings.trusted-users = [
     "root"
-    "dgnr"
+    "dmgnr"
   ];
 }

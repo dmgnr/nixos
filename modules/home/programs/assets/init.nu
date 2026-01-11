@@ -132,7 +132,7 @@ def --wrapped nix [...args] {
             ^nix ...$args
         }
     } else if $args.0 == "run" {
-        ^nix run ($args | get -i 1 | default "" | pkgify) ...($args | skip 2)
+        ^nix run ($args | get -o 1 | default "" | pkgify) ...($args | skip 2)
     } else if $args.0 == "shell" {
         ^nix shell ...($args | skip 1 | pkgify)
     } else {

@@ -21,11 +21,11 @@
     "$terminal" = "kitty nu";
     "$fileManager" = "dolphin";
     "$menud" = "tofi-drun";
-    "$menu" = ''hyprctl dispatch exec "[float; size 100% 20px; move 0% 100%-43; pin; stayfocused; animation slide bottom; noborder]LAUNCHER=1 kitty --class launcher nu"'';
+    "$menu" = ''hyprctl dispatch exec "[float; size monitor_w 20; move 0 monitor_h-43; pin; stayfocused; animation slide bottom; noborder]LAUNCHER=1 kitty --class launcher nu"'';
     "$util" = "bun ${./util/index.ts}";
     "$browser" = "thorium";
     "$qalc" =
-      "pkill qalc; hyprctl dispatch exec \"[size 350 400; move 100%-350 100%-420; pin; float; stayfocused; dimaround; animation slide bottom]kitty qalc\"";
+      "pkill qalc; hyprctl dispatch exec \"[size 350 400; move monitor_w-350 monitor_h-420; pin; float; stay_focused; dim_around; animation slide bottom]kitty qalc\"";
     "$record" =
       "bash -c 'pkill wf-recorder || (hyprctl notify 1 2000 0 \"Recording started\" && wf-recorder -f recording.mp4 -y -g \"$(slurp)\" && wl-copy -t video/mp4 < recording.mp4 && hyprctl notify 1 2000 0 \"Recording finished\")'";
     "$recordfull" =
