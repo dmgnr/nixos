@@ -8,7 +8,7 @@
     vscode
     plymouth
     bun
-    zulu23
+    zulu25
     zulu17 # For WPILib, should still default to 23 in global
     ntfs3g
     kdePackages.qtdeclarative
@@ -30,7 +30,7 @@
     blender
     unzip
     wf-recorder
-    
+
     arduino-ide
     python3
     astyle

@@ -33,6 +33,14 @@
     "$togglewb" =
       "pkill -SIGUSR1 waybar";
 
+    monitorv2 = {
+      output = "eDP-1";
+      mode = "1920x1080@60";
+      position = "0x0";
+      scale = 1;
+      bitdepth = 10;
+      #cm = wide
+    };
     monitor = ",preferred,auto,auto";
 
     # General settings
@@ -105,6 +113,7 @@
     misc = {
       force_default_wallpaper = -1;
       disable_hyprland_logo = true;
+      disable_splash_rendering = true;
       enable_swallow = true;
       swallow_regex = [ "kitty" ];
       focus_on_activate = true;
@@ -121,15 +130,15 @@
       };
     };
 
-    # Gestures
-    gestures = {
-      workspace_swipe = false;
-    };
-
     # Device-specific settings
     device = {
       name = "epic-mouse-v1";
       sensitivity = -0.5;
+    };
+
+    ecosystem = {
+      no_update_news = true;
+      no_donation_nag = true;
     };
 
     # Keybindings
@@ -201,26 +210,33 @@
     ];
     windowrule = [
       # Ignore maximize requests from apps. You'll probably like this.
-      "suppressevent maximize, class:.*"
+      "suppress_event maximize, match:class .*"
       # Fix some dragging issues with XWayland
-      "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+      "no_focus on, match:class .*, match:title .*, match:xwayland 1, match:float 1, match:fullscreen 0, match:pin 0"
       # Keep picture in picture on all workspaces
-      "float, title:^(Picture in picture)$"
-      "pin, title:^(Picture in picture)$"
+      "float on, pin on, match:title ^(Picture in picture)$"
       # Remove border when there's only 1 window
-      "noborder, onworkspace:w[tv1] f[-1], floating:0"
+      "border_size 0, match:workspace w[tv1] f[-1], match:float 0"
       # Fix some issues with Waydroid
-      "float, maximize, pin, noblur, class:^(waydroid\\.)(.+)$"
+      "float on, maximize on, pin on, no_blur on, match:class ^(waydroid\.)(.+)$"
       # Fix buggy scaling in Wine
-      "float, class:^(.+)\\.exe$"
+      "float on, match:class ^(.+)\.exe$"
       # Fix context menu blur
-      "noblur,class:^()$,title:^()$"
+      "no_blur on, match:class ^()$, match:title ^()$"
     ];
 
     # Waybar blur
     layerrule = [
-      "blur, waybar"
-      "blur, wofi"
+      {
+        name = "layerrule-1";
+        blur = "on";
+        "match:namespace" = "waybar";
+      }
+      {
+        name = "layerrule-2";
+        blur = "on";
+        "match:namespace" = "wofi";
+      }
     ];
 
     env = [

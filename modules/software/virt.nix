@@ -5,7 +5,7 @@
     enable = true;
     setSocketVariable = true;
   };
-  virtualisation.waydroid.enable = true;
+  # virtualisation.waydroid.enable = true;
 
   systemd.services."docker" = {
     overrideStrategy = "asDropin";

@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.dgnr = {
+  users.users.dmgnr = {
     isNormalUser = true;
     description = "Dreamgineer";
     extraGroups = [
@@ -18,7 +18,7 @@
       vesktop
       fastfetch
       nixd
-      nixfmt-rfc-style
+      nixfmt
       element-desktop
       blackbox-terminal
       gh
@@ -30,33 +30,6 @@
       biome
       platformio-core
       discord
-
-      godns
-      #  thunderbird
-    ];
-  };
-  users.users.silas = {
-    isNormalUser = true;
-    description = "SupremeFlyGuy";
-    extraGroups = [
-      "networkmanager"
-    ];
-    packages = with pkgs; [
-      kdePackages.kate
-      kdePackages.kdeconnect-kde
-      git
-      vesktop
-      fastfetch
-      nixd
-      nixfmt-rfc-style
-      element-desktop
-      gh
-      spotube
-      inshellisense
-      gearlever
-      appimage-run
-      nvtopPackages.full
-      scrcpy
 
       godns
       #  thunderbird

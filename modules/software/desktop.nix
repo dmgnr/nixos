@@ -13,7 +13,7 @@
   services.displayManager.sddm.wayland.enable = true;
   services.displayManager.defaultSession = "hyprland";
   services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "dgnr";
+  services.displayManager.autoLogin.user = "dmgnr";
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -35,6 +35,5 @@
     hypridle
     slurp
     wf-recorder
-    kdePackages.xwaylandvideobridge
   ];
 }

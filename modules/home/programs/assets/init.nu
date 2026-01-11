@@ -83,7 +83,7 @@ def rank [
     --limit: int = 20 # number of commands to return, defaults to 20
 ] {
     history | last $last
-     | group-by { get command | split words | get -i 0 }
+     | group-by { get command | split words | get -o 0 }
      | transpose cmd list
      | par-each {{ "command": $in.cmd, "count": ($in.list | length) }}
      | sort-by count --reverse

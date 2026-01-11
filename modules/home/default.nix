@@ -8,13 +8,19 @@
   # basic configuration of git, please change to your own
   programs.git = {
     enable = true;
-    userName = "dreamgineer";
-    userEmail = "me@dgnr.us";
-    delta.enable = true;
+    settings = {
+      user.name = "dreamgineer";
+      user.email = "me@dgnr.us";
+    };
     hooks = rec {
       post-commit = ./programs/assets/rebuild_hook.sh;
       update = post-commit;
     };
+  };
+  # Git diffing tool
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
   };
 
   programs.bash = {

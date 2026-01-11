@@ -18,6 +18,7 @@
     polarity = "dark";
     targets = {
       plymouth.enable = false;
+      # btop.enable = false;
     };
   };
 }

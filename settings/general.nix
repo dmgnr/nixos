@@ -1,4 +1,4 @@
 {
-  users = [ "dgnr" "silas" ];
+  users = [ "dmgnr" ];
   hostname = "nyx";
 }
