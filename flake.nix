@@ -2,6 +2,7 @@
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs?rev=9807714d6944a957c2e036f84b0ff8caf9930bc0";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     # nix-index stuff
     nix-index-database.url = "github:nix-community/nix-index-database";
@@ -45,6 +46,16 @@
       inputs.lix.follows = "lix";
     };
 
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    caelestia-cli = {
+      url = "github:caelestia-dots/cli";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     stylix = {
@@ -56,8 +67,8 @@
     {
       self,
       lix-module,
-      lix,
       nixpkgs,
+      nixpkgs-stable,
       nix-index-database,
       thorium,
       home-manager,
@@ -65,6 +76,8 @@
       lanzaboote,
       nix-flatpak,
       stylix,
+      caelestia-shell,
+      caelestia-cli,
       scope,
       ...
     }:
@@ -73,13 +86,25 @@
       nixosConfigurations =
         let
           settings = import ./settings/general.nix;
+          system = "x86_64-linux";
+          pkgs-stable = import nixpkgs-stable {
+            inherit system;
+          };
         in
         nixpkgs.lib.genAttrs [ settings.hostname "nixos" ] (
           hostname:
           nixpkgs.lib.nixosSystem rec {
-            system = "x86_64-linux";
+            inherit system;
             specialArgs = { inherit self system winapps; };
             modules = [
+              {
+                nixpkgs.overlays = [
+                  (final: prev: {
+                    zed-editor = pkgs-stable.zed-editor;
+                  })
+                ];
+              }
+
               stylix.nixosModules.stylix
               ./configuration.nix
               ./modules
@@ -95,6 +120,8 @@
                   environment.systemPackages = [
                     thorium.packages.${system}.default
                     scope.packages.${system}.default
+                    caelestia-shell.packages.${system}.default
+                    caelestia-cli.packages.${system}.default
                   ];
                 }
               )

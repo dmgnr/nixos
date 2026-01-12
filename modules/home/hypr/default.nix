@@ -32,6 +32,7 @@
       "bash -c 'pkill wf-recorder || (hyprctl notify 1 2000 0 \"Recording started\" && wf-recorder -f recording.mp4 -y && wl-copy -t video/mp4 < recording.mp4 && hyprctl notify 1 2000 0 \"Recording finished\")'";
     "$togglewb" =
       "pkill -SIGUSR1 waybar";
+    "$caelestia" = ''bash -c "pkill -f [q]uickshell && systemctl --user start waybar || (systemctl --user stop waybar && caelestia-shell)"'';
 
     monitorv2 = {
       output = "eDP-1";
@@ -164,6 +165,7 @@
         "$mod, TAB, changegroupactive," # Move into group
         "$mod, C, exec, $qalc"
         "$mod, H, exec, $togglewb"
+        "$mod SHIFT, S, exec, $caelestia"
         # ...additional keybindings from hyprland.conf...
       ]
       ++ (
@@ -202,6 +204,8 @@
       ", XF86AudioPause, exec, playerctl play-pause"
       ", XF86AudioPlay, exec, playerctl play-pause"
       ", XF86AudioPrev, exec, playerctl previous"
+      "$mod SHIFT, 201 right, exec, playerctl next"
+      "$mod SHIFT, 201 down, exec, playerctl play-pause"
       # Screenshot
       ", print, exec, hyprshot -m region --clipboard-only -z -s"
       "SHIFT, print, exec, hyprshot -m output -m active --clipboard-only -s"
@@ -211,8 +215,6 @@
     windowrule = [
       # Ignore maximize requests from apps. You'll probably like this.
       "suppress_event maximize, match:class .*"
-      # Fix some dragging issues with XWayland
-      "no_focus on, match:class .*, match:title .*, match:xwayland 1, match:float 1, match:fullscreen 0, match:pin 0"
       # Keep picture in picture on all workspaces
       "float on, pin on, match:title ^(Picture in picture)$"
       # Remove border when there's only 1 window
@@ -221,6 +223,8 @@
       "float on, maximize on, pin on, no_blur on, match:class ^(waydroid\.)(.+)$"
       # Fix buggy scaling in Wine
       "float on, match:class ^(.+)\.exe$"
+      # Float file dialog
+      "float on, match:title ^Open (File|Folder)$"
       # Fix context menu blur
       "no_blur on, match:class ^()$, match:title ^()$"
     ];

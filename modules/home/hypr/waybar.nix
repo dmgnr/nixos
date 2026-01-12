@@ -3,7 +3,7 @@
   programs.waybar.enable = true;
   programs.waybar.settings = [
     rec {
-      ctl_opts = "pin; float; stayfocused; dimaround; animation";
+      ctl_opts = "pin; float; stay_focused; dim_around; animation";
       layer = "top"; # Waybar at top layer
       "position" = "bottom"; # Waybar at the bottom of your screen
       "reload_style_on_change" = true;
@@ -74,11 +74,11 @@
           weeks-pos = "right";
         };
         tooltip-format = "<tt><small>{calendar}</small></tt>";
-        on-click = "hyprctl dispatch exec \"[size 350 400; move 100%-350 100%-420; ${ctl_opts} slide bottom]kitty\"; pkill --signal 12 waybar";
+        on-click = "hyprctl dispatch exec \"[size 350 400; move monitor_w-350 monitor_h-420; ${ctl_opts} slide bottom]kitty\"; pkill --signal 12 waybar";
       };
       cpu = {
         format = "{usage}%  ";
-        on-click = "hyprctl dispatch exec \"[size 90% 90%; ${ctl_opts}; animation popin]kitty btop\"";
+        on-click = "hyprctl dispatch exec \"[size monitor_w*0.9 monitor_h*0.9; ${ctl_opts}; animation popin]kitty btop\"";
       };
       memory = {
         format = "{}%  ";
@@ -103,7 +103,7 @@
           "󰂂"
           "󰁹"
         ];
-        on-click = "hyprctl dispatch exec \"[size 350 400; move 100%-350 100%-420; ${ctl_opts} slide bottom]kitty qalc\"";
+        on-click = "hyprctl dispatch exec \"[size 350 400; move monitor_w-350 monitor_h-420; ${ctl_opts} slide bottom]kitty qalc\"";
       };
       "network" = {
         format-wifi = " ";
@@ -112,7 +112,7 @@
         tooltip-format-disconnected = "Not connected.";
         tooltip-format-wifi = "{essid} ({signalStrength}%) ";
         tooltip-format-ethernet = "{ifname} 🖧 ";
-        on-click = "hyprctl dispatch exec \"[size 350 400; move 100%-350 100%-418; ${ctl_opts} slide bottom]kitty nmtui\"";
+        on-click = "hyprctl dispatch exec \"[size 350 400; move monitor_w-350 monitor_h-418; ${ctl_opts} slide bottom]kitty nmtui\"";
       };
       "pulseaudio" = {
         #scroll-step = 1;
@@ -131,7 +131,7 @@
             ""
           ];
         };
-        on-click = "hyprctl dispatch exec \"[size 380 400; move 100%-400 100%-418; ${ctl_opts} slide bottom]pavucontrol\"";
+        on-click = "hyprctl dispatch exec \"[size 380 400; move monitor_w-400 monitor_h-418; ${ctl_opts} slide bottom]pavucontrol\"";
       };
       "custom/info" = {
         exec = "scope";

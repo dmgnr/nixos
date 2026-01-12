@@ -24,7 +24,7 @@
   # Set your time zone.
   time.timeZone = lib.mkDefault "Asia/Bangkok";
   services.timesyncd.fallbackServers = [ "cdga-dc1.canandaiguaschools.org" ];
-  services.automatic-timezoned.enable = true;
+  services.automatic-timezoned.enable = false;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";

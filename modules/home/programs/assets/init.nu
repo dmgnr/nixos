@@ -111,8 +111,10 @@ def --wrapped git [...args] {
 
 def pkgify [] {
     each {
-        if ($in | str starts-with "-") or ($in | str contains "#") {
+        if ($in | str starts-with "-") or ($in | str starts-with "github:") or ($in | str contains "#") or ($in | path exists) {
             $in
+        } else if ($in | str contains "/") {
+            $"github:($in)"
         } else $"nixpkgs#($in)"
     }
 }
