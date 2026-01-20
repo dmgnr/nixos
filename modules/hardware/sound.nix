@@ -26,5 +26,59 @@
         }
       ];
     };
+    wireplumber.extraConfig."11-conexant-fix.conf" = {
+      "monitor.alsa.rules" = [
+        {
+          matches = [
+            { "device.name" = "~alsa_card.*"; }
+          ];
+
+          actions = {
+            update-props = {
+              # keep soft volume
+              "api.alsa.soft-mixer" = true;
+              "api.alsa.ignore-dB" = true;
+            };
+
+            # run once when card appears
+            exec = [
+              {
+                path = "/run/current-system/sw/bin/amixer";
+                args = [
+                  "-c"
+                  "1"
+                  "set"
+                  "Speaker"
+                  "unmute"
+                ];
+              }
+              {
+                path = "`/run/current-system/sw/bin/amixer`";
+                args = [
+                  "-c"
+                  "1"
+                  "set"
+                  "Line Out"
+                  "100%"
+                  "unmute"
+                ];
+              }
+              {
+                path = "/run/current-system/sw/bin/amixer";
+                args = [
+                  "-c"
+                  "1"
+                  "set"
+                  "Headphone"
+                  "100%"
+                  "unmute"
+                ];
+              }
+            ];
+          };
+        }
+      ];
+    };
+
   };
 }

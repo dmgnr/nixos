@@ -11,5 +11,6 @@
     ./nix.nix
     ./zed.nix
     ./cava.nix
+    ./eq.nix
   ];
 }

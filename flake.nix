@@ -35,17 +35,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    lix = {
-      url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
-      flake = false;
-    };
-
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.lix.follows = "lix";
-    };
-
     caelestia-shell = {
       url = "github:caelestia-dots/shell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -66,7 +55,6 @@
   outputs =
     {
       self,
-      lix-module,
       nixpkgs,
       nixpkgs-stable,
       nix-index-database,
@@ -160,9 +148,6 @@
 
               # Lanzaboote
               lanzaboote.nixosModules.lanzaboote
-
-              # Lix
-              lix-module.nixosModules.default
 
               # Flatpak
               nix-flatpak.nixosModules.nix-flatpak

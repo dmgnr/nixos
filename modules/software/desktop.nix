@@ -15,6 +15,9 @@
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "dmgnr";
 
+  # For EasyEffects
+  programs.dconf.enable = true;
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";

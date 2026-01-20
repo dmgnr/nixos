@@ -12,9 +12,8 @@
 
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.systemd.extraCommands = [
-    "hyprctl setcursor Bibata-Modern-Classic 24"
-    "systemctl --user enable --now hyprpolkitagent hypridle hyprpaper swaync waybar"
-    "hyprlock & kitty & kdeconnectd & kdeconnect-indicator & blueman-applet & ktailctl"
+    # boot.ts initialize all necessary services at startup
+    "hyprlock & kitty & bun ${./util/boot.ts}"
   ];
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
@@ -33,6 +32,7 @@
     "$togglewb" =
       "pkill -SIGUSR1 waybar";
     "$caelestia" = ''bash -c "pkill -f [q]uickshell && systemctl --user start waybar || (systemctl --user stop waybar && caelestia-shell)"'';
+    "$clauncher" = "caelestia shell drawers toggle launcher";
 
     monitorv2 = {
       output = "eDP-1";
@@ -123,7 +123,7 @@
     # Input settings
     input = {
       kb_layout = "us,th";
-      kb_options = "grp:win_space_toggle";
+      kb_options = "caps:none,grp:win_space_toggle";
       follow_mouse = 1;
       sensitivity = 0;
       touchpad = {
@@ -184,6 +184,10 @@
           ) 9
         )
       );
+    bindr = [
+      # "$mod, SUPER_L, exec, $clauncher"
+      "$mod SHIFT, 201, exec, $clauncher"
+    ];
     bindm = [
       # Move/resize windows with mainMod + LMB/RMB and dragging
       "$mod, mouse:272, movewindow"
