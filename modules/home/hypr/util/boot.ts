@@ -2,6 +2,13 @@ import { $ } from "bun";
 
 type Cmd = $.ShellPromise;
 
+const log = async (msg: string, ..._: unknown[]) =>
+	await $`hyprctl notify 1 2000 0 ${msg}`;
+const success = async (msg: string, ..._: unknown[]) =>
+	await $`hyprctl notify 2 2000 0 ${msg}`;
+const error = async (msg: string, ..._: unknown[]) =>
+	await $`hyprctl notify 3 2000 0 ${msg}`;
+
 class Node {
 	name: string;
 	cmds: Cmd[];
@@ -74,16 +81,16 @@ async function run(root: Node) {
 
 		await Promise.all(
 			ready.map(async (n) => {
-				console.log(`[node ${n.name}] starting`);
+				log(`[node ${n.name}] starting`);
 				// sequential within node (predictable). If you want parallel, swap to Promise.all.
 				for (const cmd of n.cmds) {
 					try {
 						await cmd;
 					} catch (e) {
-						console.error(`[node ${n.name}] fail`, e);
+						error(`[node ${n.name}] fail`, e);
 					}
 				}
-				console.log(`[node ${n.name}] ok`);
+				success(`[node ${n.name}] ok`);
 			}),
 		);
 
@@ -92,6 +99,8 @@ async function run(root: Node) {
 			done.add(n);
 		});
 	}
+
+	success("startup complete");
 }
 
 const tree = dec(
