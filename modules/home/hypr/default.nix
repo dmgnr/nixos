@@ -31,7 +31,7 @@
       "bash -c 'pkill wf-recorder || (hyprctl notify 1 2000 0 \"Recording started\" && wf-recorder -f recording.mp4 -y && wl-copy -t video/mp4 < recording.mp4 && hyprctl notify 1 2000 0 \"Recording finished\")'";
     "$togglewb" =
       "pkill -SIGUSR1 waybar";
-    "$caelestia" = ''bash -c "pkill -f [q]uickshell && systemctl --user start waybar || (systemctl --user stop waybar && caelestia-shell)"'';
+    "$caelestia" = ''bash -c "systemctl kill --user --fail caelestia && systemctl --user start waybar swaync || (systemctl --user stop waybar swaync && systemctl --user start caelestia)"'';
     "$clauncher" = "caelestia shell drawers toggle launcher";
 
     monitorv2 = {

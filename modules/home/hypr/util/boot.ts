@@ -109,7 +109,7 @@ const tree = dec(
 ).then(
 	dec(
 		"daemons",
-		["hyprpolkitagent", "hypridle", "hyprpaper", "swaync", "easyeffects"].map(
+		["hyprpolkitagent", "hypridle", "hyprpaper", "caelestia", "easyeffects"].map(
 			(s) => $`systemctl --user enable --now ${s}`,
 		),
 	),

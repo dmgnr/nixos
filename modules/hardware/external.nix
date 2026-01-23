@@ -9,6 +9,7 @@
   systemd.sleep.extraConfig = "SuspendState=mem";
 
   powerManagement.powertop.enable = true;
+  services.upower.enable = true;
 
   # Location service
   location.provider = "geoclue2";

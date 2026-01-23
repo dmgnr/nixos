@@ -15,6 +15,17 @@
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "dmgnr";
 
+  systemd.user.services.caelestia = {
+    description = "Caelestia Shell";
+
+    serviceConfig = {
+      ExecStart = "/usr/bin/caelestia-shell";
+      Restart = "always";
+      KillMode = "process";
+      RestartSec = "2s";
+    };
+  };
+
   # For EasyEffects
   programs.dconf.enable = true;
 
